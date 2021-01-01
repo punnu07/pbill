@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.widget.Toast;
 import android.net.Uri;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View ;
 import android.webkit.WebView ;
@@ -39,35 +41,30 @@ public class MainActivity2 extends AppCompatActivity {
         StrictMode.setVmPolicy(builder.build());
         setContentView(R.layout.activity_main2);
 
-
-
-
-
         Button startBtn = (Button) findViewById(R.id.sendEmail);
         startBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
                 sendEmail();
+
             }
         });
 
 
 
-    }
+    }//end of onCreate
+
+
+
 
 
     protected void sendEmail() {
-
         File path=new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+"/prakriti/invoice.pdf");
         Uri myuri=Uri.fromFile(path);
-
-
-
-
         Log.i("Send email", "");
         String[] TO = {""};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
@@ -75,15 +72,33 @@ public class MainActivity2 extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Prakriti Invoice");
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
         emailIntent.putExtra(Intent.EXTRA_STREAM, myuri);
-
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-            Log.i("Finished sending email...", "");
+            //startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            startActivityForResult(Intent.createChooser(emailIntent, "Send mail..."), 800);
+           Log.i("Finished sending email...", "");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(MainActivity2.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
-    }
+
+
+
+    }//end of function
+
+
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 800) {
+            Intent intent = new Intent(context, MainActivity3.class);
+            startActivity(intent);
+            finish();
+
+        }
+    }//end of function
+
+
+
+
 }// end of class
 
 

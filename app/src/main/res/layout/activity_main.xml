@@ -6,38 +6,301 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <Button
+        android:id="@+id/add_row3"
+        android:layout_width="116dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginLeft="292dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Add Row"
+        app:backgroundTint="#B8A5A5"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="372dp"
+        android:layout_marginBottom="4dp"
         android:text="proceed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout4"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="prakriti"
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="407dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.163">
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#BDBDBD">
+
+            <TextView
+                android:id="@+id/tv_sl"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_column="1"
+                android:gravity="center_horizontal"
+                android:text="Sl no"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="254dp"
+                android:layout_height="match_parent"
+                android:layout_column="2"
+                android:gravity="center_horizontal"
+                android:text="Description"
+                android:textAlignment="center"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="103dp"
+                android:layout_height="match_parent"
+                android:layout_column="3"
+                android:gravity="center_horizontal"
+                android:text="Amount"
+                android:textAlignment="center"
+
+                android:textSize="12sp" />
+        </TableRow>
+
+    </TableLayout>
+
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="407dp"
+        android:layout_height="261dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.312">
+
+
+        <TableRow
+            android:layout_width="404dp"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/sl"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_column="1"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+
+                android:textSize="12sp" />
+
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="254dp"
+                android:layout_height="match_parent"
+                android:layout_column="2"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+
+                />
+
+
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="103dp"
+                android:layout_height="match_parent"
+                android:layout_column="3"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+
+                />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="91dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Address"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/invoice_no"
+        android:layout_width="95dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Invoice no"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/editTextTextMultiLine"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
-        tools:layout_editor_absoluteX="191dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ip"
+    <Button
+        android:id="@+id/add_row"
+        android:layout_width="104dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="304dp"
+        android:layout_marginLeft="304dp"
+        android:layout_marginTop="72dp"
+        android:text="Add Row"
+        app:backgroundTint="#B8A5A5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/invoice_no" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="159dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Tax/Other Details"
+        android:textColor="#300A72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <TableLayout
+        android:id="@+id/tableLayout3"
+        android:layout_width="415dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.027">
+
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="137dp"
-            android:hint="Enter your particulars" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="100dp"
+            android:background="#BDBDBD">
+
+            <TextView
+                android:id="@+id/other_tax"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:layout_column="1"
+                android:gravity="center_horizontal"
+                android:text="Tax Details"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/other_percentage"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:layout_column="2"
+                android:gravity="center_horizontal"
+                android:text="Percentage"
+                android:textAlignment="center"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/other_amount"
+                android:layout_width="165dp"
+                android:layout_height="match_parent"
+                android:layout_column="3"
+                android:gravity="center_horizontal"
+                android:text="Amount"
+                android:textAlignment="center"
+
+                android:textSize="12sp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout4"
+        android:layout_width="419dp"
+        android:layout_height="269dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout3">
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/tax"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:layout_column="1"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+
+                android:textSize="12sp" />
+
+
+            <EditText
+                android:id="@+id/percentage"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:layout_column="2"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+
+                />
+
+
+            <EditText
+                android:id="@+id/tax_amount"
+                android:layout_width="165dp"
+                android:layout_height="match_parent"
+                android:layout_column="3"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+
+                />
+        </TableRow>
+
+
+    </TableLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
