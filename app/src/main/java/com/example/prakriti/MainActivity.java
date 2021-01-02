@@ -20,12 +20,21 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+
+
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
+
+import org.w3c.dom.Element;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,13 +44,21 @@ public class MainActivity extends AppCompatActivity {
     TableRow tr,trr;
     EditText eett, eeettt;
     EditText et,et2, et3,  tet1, tet2, tet3;
-     static  int extra_sl_count=11;
+
+    static  int extra_sl_count=11;
     static int extra_description_count=111;
     static int extra_amount_count=1111;
 
     static  int tax_count=55;
     static int percentage_count=555;
     static int tax_amount_count=5555;
+
+
+    static int numLinesInParticulars=1;
+    static int numLinesinTax=1;
+
+
+
 
 
 
@@ -88,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0)
             {
 
+
+                numLinesInParticulars++;
 
                  tl = (TableLayout) findViewById(R.id.tableLayout);
                 tr = new TableRow(context);
@@ -152,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0)
             {
 
-
+                numLinesinTax++;
                 tll = (TableLayout) findViewById(R.id.tableLayout4);
                 trr = new TableRow(context);
                 trr.setLayoutParams(new TableRow.LayoutParams(
@@ -222,16 +241,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void createPdf() throws FileNotFoundException
     {
-        /*
+
         PdfWriter pw;
+       EditText et;
+       String str;
+       Cell cell1, cell2, cell3, cell4;
 
 
-        til=findViewById(R.id.ip);
+
+       // til=findViewById(R.id.ip);
         final Context context = this;
         try {
 
-
-            //File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "Your directory name");
+           //File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "Your directory name");
             File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "prakriti");
             if (!folder.exists()) {
                 folder.mkdirs();
@@ -247,9 +269,191 @@ public class MainActivity extends AppCompatActivity {
             pw = new PdfWriter(filename);
             PdfDocument pd=new PdfDocument(pw);
             Document d =new Document(pd);
-           // Paragraph pg=new Paragraph("First Invoice");
-            Paragraph pg=new Paragraph(til.getText().toString());
-            d.add(pg);
+
+
+
+
+            //set the column width
+            float [] pointColumnWidths = {39F,344F,106,106};
+            Table table = new Table(pointColumnWidths);
+
+
+            //header of the table
+             cell1 = new Cell();
+            Paragraph p= new Paragraph("Sl No");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.add(p);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            table.addCell(cell1);
+
+
+            cell2 = new Cell();
+             p= new Paragraph("Description");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell2.add(p);
+            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            table.addCell(cell2);
+
+
+             cell3 = new Cell();
+            p= new Paragraph("Tax/Cess");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell3.add(p);
+            table.addCell(cell3);
+
+             cell4 = new Cell();
+            p= new Paragraph("Amount");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell4.add(p);
+            table.addCell(cell4);
+
+
+
+
+
+  //experimental row
+
+
+           //only one particular
+            if(numLinesInParticulars==1) {
+
+
+                et = findViewById(R.id.sl);
+                cell1 = new Cell();
+                str = et.getText().toString();
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell1.add(p);
+                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                table.addCell(cell1);
+
+
+                et = findViewById(R.id.description);
+                cell2 = new Cell();
+                str = et.getText().toString();
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell2.add(p);
+                cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                table.addCell(cell2);
+
+
+                cell3 = new Cell();
+                p = new Paragraph("");
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell3.add(p);
+                table.addCell(cell3);
+
+
+                et = findViewById(R.id.amount);
+                cell4 = new Cell();
+                str = et.getText().toString();
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell4.add(p);
+                table.addCell(cell4);
+            }
+
+            //number of particulars >1
+            if(numLinesInParticulars>1)
+            {
+
+                //first add the first id data
+                et = findViewById(R.id.sl);
+                cell1 = new Cell();
+                str = et.getText().toString();
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell1.add(p);
+                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                table.addCell(cell1);
+
+
+                et = findViewById(R.id.description);
+                cell2 = new Cell();
+                str = et.getText().toString();
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell2.add(p);
+                cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                table.addCell(cell2);
+
+
+                cell3 = new Cell();
+                p = new Paragraph("");
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell3.add(p);
+                table.addCell(cell3);
+
+
+                et = findViewById(R.id.amount);
+                cell4 = new Cell();
+                str = et.getText().toString();
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+                cell4.add(p);
+                table.addCell(cell4);
+
+                //Now get from 2nd row onwards
+                // i must be >=2
+
+                for(int i=2;i<=numLinesInParticulars;i++)
+                {
+
+                    et = findViewById(11+(i-2));
+                    cell1 = new Cell();
+                    str = et.getText().toString();
+                    p = new Paragraph(str);
+                    p.setTextAlignment(TextAlignment.CENTER);
+                    cell1.add(p);
+                    cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                    table.addCell(cell1);
+
+
+
+
+                    et = findViewById(111+(i-2));
+                    cell2 = new Cell();
+                    str = et.getText().toString();
+                    p = new Paragraph(str);
+                    p.setTextAlignment(TextAlignment.CENTER);
+                    cell2.add(p);
+                    cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                    table.addCell(cell2);
+
+
+
+
+                    cell3 = new Cell();
+                    p = new Paragraph("");
+                    p.setTextAlignment(TextAlignment.CENTER);
+                    cell3.add(p);
+                    table.addCell(cell3);
+
+
+                    et = findViewById(1111+(i-2));
+                    cell4 = new Cell();
+                    str = et.getText().toString();
+                    p = new Paragraph(str);
+                    p.setTextAlignment(TextAlignment.CENTER);
+                    cell4.add(p);
+                    table.addCell(cell4);
+
+
+                      
+
+                }//for loop
+
+
+
+
+            }//closing for greater than or equal to 2
+
+
+
+
+           //add to the table the rows
+            d.add(table);
             d.close();
 
 
@@ -261,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-  */
+
 
     }
 
