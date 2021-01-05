@@ -20,13 +20,17 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.colors.WebColors;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
@@ -39,6 +43,7 @@ import java.io.FileWriter;
 
 
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 
@@ -243,13 +248,21 @@ public class MainActivity extends AppCompatActivity {
 
     private  void createPdf3() throws FileNotFoundException {
         PdfWriter pw;
-        EditText et;
-        String str;
+        EditText et1,et2,et3,et4;
+        String str, str2,str3;
         Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7;
         Table table1, table2, table3, table4, table5, table6;
+        Paragraph p;
+
 
         Color headerBg = new Color();
         com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(255, 100, 20);
+
+
+        et1=findViewById(R.id.client_address);
+        et2=findViewById(R.id.project_details);
+        et3=findViewById(R.id.invoice_no);
+
 
 
         float[] pointColumnWidths = {39F, 344F,212F};
@@ -259,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
         float[] pointColumnWidths5 = {172F};
         float[] pointColumnWidths6 = {39F};
         float[] pointColumnWidths7 = {212F};
+
+        float [] pointColumnWidths8 ={383,212};
 
         //for the lowermost row
         float cell_height=100;
@@ -282,6 +297,123 @@ public class MainActivity extends AppCompatActivity {
             PdfDocument pd = new PdfDocument(pw);
             Document d = new Document(pd);
 
+
+            /*
+            PdfPage page = pd.addNewPage();
+            PdfCanvas pdfCanvas = new PdfCanvas(page);
+            Rectangle rectangle = new Rectangle(36, 650, 100, 100);
+            pdfCanvas.rectangle(rectangle);
+            pdfCanvas.stroke();
+            Canvas canvas = new Canvas(pdfCanvas, pd, rectangle);
+            PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+            PdfFont bold = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
+            Text title = new Text("The Strange Case of Dr. Jekyll and Mr. Hyde").setFont(bold);
+            Text author = new Text("Robert Louis Stevenson").setFont(font);
+            Paragraph p = new Paragraph().add(title).add(" by ").add(author);
+            canvas.add(p);
+            canvas.close();
+               */
+
+
+
+
+
+
+
+
+
+            Paragraph pr1=new Paragraph(et1.getText().toString());
+            //Toast.makeText(MainActivity.this,et1.getText().toString(), Toast.LENGTH_LONG).show();
+
+
+            table4 =new Table(pointColumnWidths8);
+            table4.setVerticalBorderSpacing(10);
+
+
+
+
+            //str=et1.getText().toString();
+            str="GSTIN:-32AAUFP9623J1ZO \n STATE:-Kerala(32)\nSpecification:-SAC - 995411";
+            cell2 = new Cell();
+            p= new Paragraph(str);
+            p.setTextAlignment(TextAlignment.LEFT);
+            cell2.add(p);
+            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell2);
+
+
+            //add invoice
+            str2="INVOICE\nNo:-";
+
+            str=et3.getText().toString();
+            str3=str2+str;
+            cell2 = new Cell();
+            p= new Paragraph(str3);
+            p.setTextAlignment(TextAlignment.LEFT);
+            cell2.add(p);
+            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell2);
+
+
+
+
+            //add a blank row
+            cell3 = new Cell();
+            p = new Paragraph(" \n ");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell3);
+
+            cell3 = new Cell();
+            p = new Paragraph(" \n ");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell3);
+
+
+
+            //client details
+            str2="Client Name & Address\n";
+
+            str=et1.getText().toString();
+            str3=str2+str;
+            cell2 = new Cell();
+            p= new Paragraph(str3);
+            p.setTextAlignment(TextAlignment.LEFT);
+            cell2.add(p);
+            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell2);
+
+
+
+            //project details
+            str2="Project Details\n";
+            str=et2.getText().toString();
+            str3=str2+str;
+            cell2 = new Cell();
+            p= new Paragraph(str3);
+            p.setTextAlignment(TextAlignment.LEFT);
+            cell2.add(p);
+            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+            table4.addCell(cell2);
+
+
+            d.add(table4);
+
+            d.add( new Paragraph( "\n" ) );
+
+
             //PdfPage pdfPage = pd.addNewPage();
             //set the column width
             Table table = new Table(pointColumnWidths);
@@ -296,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
 
             //header of the table
             cell1 = new Cell();
-            Paragraph p= new Paragraph("Sl No");
+            p= new Paragraph("Sl No");
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
