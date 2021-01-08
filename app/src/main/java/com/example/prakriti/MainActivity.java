@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.fonts.Font;
 import android.os.Environment;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -33,6 +34,7 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 
@@ -70,6 +72,19 @@ public class MainActivity extends AppCompatActivity {
 
     static int numLinesInParticulars=1;
     static int numLinesinTax=1;
+
+
+    //height of lowest row
+    float cell_height=100;
+
+    //minimum table height
+    float initial_table_heights=130;
+
+    //max_table height
+    float max_table_height=250;
+
+    int max_number_of_particular_rows=4;
+    int max_number_of_tax_rows=5;
 
 
 
@@ -120,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
             {
 
 
+                if(numLinesInParticulars> max_number_of_particular_rows)
+                {
+                    return;
+                }
                 numLinesInParticulars++;
 
                  tl = (TableLayout) findViewById(R.id.tableLayout);
@@ -184,6 +203,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0)
             {
 
+                if(numLinesinTax>max_number_of_tax_rows)
+                {
+                    return;
+                }
                 numLinesinTax++;
                 tll = (TableLayout) findViewById(R.id.tableLayout4);
                 trr = new TableRow(context);
@@ -249,15 +272,15 @@ public class MainActivity extends AppCompatActivity {
     private  void createPdf3() throws FileNotFoundException {
         PdfWriter pw;
         EditText et1,et2,et3,et4;
-        String str, str2,str3;
+        String str, str2,str3,str4;
         Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7;
         Table table1, table2, table3, table4, table5, table6;
         Paragraph p;
 
 
         Color headerBg = new Color();
-        com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(255, 100, 20);
-
+        com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(0, 55, 130);
+        com.itextpdf.kernel.colors.Color myColorBlack = new DeviceRgb(0, 0, 0);
 
         et1=findViewById(R.id.client_address);
         et2=findViewById(R.id.project_details);
@@ -276,8 +299,6 @@ public class MainActivity extends AppCompatActivity {
         float [] pointColumnWidths8 ={383,212};
 
         //for the lowermost row
-        float cell_height=100;
-        float initial_table_heights=300;
 
         final Context context = this;
         try {
@@ -327,15 +348,17 @@ public class MainActivity extends AppCompatActivity {
 
 
             table4 =new Table(pointColumnWidths8);
-            table4.setVerticalBorderSpacing(10);
+            table4.setVerticalBorderSpacing(5);
 
 
 
 
-            //str=et1.getText().toString();
-            str="GSTIN:-32AAUFP9623J1ZO \n STATE:-Kerala(32)\nSpecification:-SAC - 995411";
+
+            Text redText = new Text("GSTIN:-32AAUFP9623J1ZO\n").setFontColor(myColorBlack).setBold();
+            str="STATE:-Kerala(32)\nSpecification:-SAC - 995411";
             cell2 = new Cell();
-            p= new Paragraph(str);
+            p= new Paragraph(redText);
+            p.add(str);
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -344,13 +367,20 @@ public class MainActivity extends AppCompatActivity {
             table4.addCell(cell2);
 
 
+
+
+
             //add invoice
-            str2="INVOICE\nNo:-";
 
             str=et3.getText().toString();
-            str3=str2+str;
+            redText = new Text("INVOICE\n").setFontColor(myColor).setBold();
+
+           str3="No:-";
             cell2 = new Cell();
-            p= new Paragraph(str3);
+            p= new Paragraph(redText);
+            p.add(str3);
+            p.add(str);
+
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -381,12 +411,12 @@ public class MainActivity extends AppCompatActivity {
 
 
             //client details
+             redText = new Text("Client Name & Address\n").setFontColor(myColor).setBold().setUnderline();
             str2="Client Name & Address\n";
-
             str=et1.getText().toString();
-            str3=str2+str;
             cell2 = new Cell();
-            p= new Paragraph(str3);
+            p= new Paragraph(redText);
+            p.add(str);
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -397,11 +427,12 @@ public class MainActivity extends AppCompatActivity {
 
 
             //project details
-            str2="Project Details\n";
+
+            redText = new Text("Project Details\n").setFontColor(myColor).setBold().setUnderline();
             str=et2.getText().toString();
-            str3=str2+str;
             cell2 = new Cell();
-            p= new Paragraph(str3);
+            p= new Paragraph(redText);
+            p.add(str);
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -417,10 +448,21 @@ public class MainActivity extends AppCompatActivity {
             //PdfPage pdfPage = pd.addNewPage();
             //set the column width
             Table table = new Table(pointColumnWidths);
+            table.setBorder(new SolidBorder(1));
+
 
             table1 =new Table(pointColumnWidths6);
             table2 =new Table(pointColumnWidths3);
             table3 =new Table(pointColumnWidths2);
+
+            //table1.setBorder(new SolidBorder(1));
+            //table2.setBorder(new SolidBorder(1));
+            //table3.setBorder(new SolidBorder(1));
+
+
+
+
+
 
             //table1.setHeight(initial_table_heights);
             //table2.setHeight(initial_table_heights);
@@ -582,7 +624,12 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell1.add(p);
                 cell1.setHeight(initial_table_heights);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            if(numLinesInParticulars<=2)
+            {
+                cell1.setHeight(max_table_height);
+            }
+
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 table1.addCell(cell1);
 
 
@@ -592,6 +639,10 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell2.add(p);
                 cell2.setHeight(initial_table_heights);
+                if(numLinesInParticulars<=2)
+                {
+                    cell2.setHeight(max_table_height);
+                }
 
                 cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 table2.addCell(cell2);
@@ -602,7 +653,12 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell3.add(p);
                 cell3.setHeight(initial_table_heights);
-                table3.addCell(cell3);
+            if(numLinesInParticulars<=2)
+            {
+                cell3.setHeight(max_table_height);
+            }
+
+            table3.addCell(cell3);
 
 
                 cell4 = new Cell();
@@ -611,6 +667,11 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell4.add(p);
                 cell4.setHeight(initial_table_heights);
+            if(numLinesInParticulars<=2)
+            {
+                cell4.setHeight(max_table_height);
+            }
+
 
             table3.addCell(cell4);
 
@@ -672,6 +733,13 @@ public class MainActivity extends AppCompatActivity {
             table4= new Table(pointColumnWidths5);
 
             table5= new Table(pointColumnWidths5);
+
+
+            //table2.setBorder(new SolidBorder(1));
+            //table3.setBorder(new SolidBorder(1));
+            //table5.setBorder(new SolidBorder(1));
+
+
 
 
             //add to left of table3
@@ -769,15 +837,16 @@ public class MainActivity extends AppCompatActivity {
 
                 //create a table to add 2 rows of percentage and amount
              table2=new Table(pointColumnWidths7);
+               //add tax percentage and amount to a table
+             table3=new Table(pointColumnWidths2);
+
+            //table2.setBorder(new SolidBorder(1));
+            //table3.setBorder(new SolidBorder(1));
 
 
-                //add tax percentage and amount to a table
-                table3=new Table(pointColumnWidths2);
 
 
-
-
-                et = findViewById(R.id.percentage);
+            et = findViewById(R.id.percentage);
                 cell1 = new Cell();
                  str = et.getText().toString();
                 if(str.isEmpty())
