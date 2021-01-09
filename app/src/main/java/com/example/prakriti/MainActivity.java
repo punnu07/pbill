@@ -10,6 +10,7 @@ import android.graphics.fonts.Font;
 import android.os.Environment;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -151,12 +152,15 @@ public class MainActivity extends AppCompatActivity {
                 et=new EditText(context);
                 //get the id of the existing edittext
                 eett= findViewById(R.id.sl);
+                eett.setTextSize(14);
+                eett.setHeight(60);
                 //set new id
                 et.setLayoutParams(new TableRow.LayoutParams(1));
 
                 et.setId(extra_sl_count);
                 et.setHeight(eett.getHeight());
                 et.setWidth(eett.getWidth());
+                et.setTextSize(14);
                 tr.addView(et);
 
 
@@ -164,10 +168,11 @@ public class MainActivity extends AppCompatActivity {
                 et2=new EditText(context);
 
                 eett= findViewById(R.id.description);
+                eett.setTextSize(14);
                 //set new id
                 et2.setId(extra_description_count);
                 et2.setLayoutParams(new TableRow.LayoutParams(2));
-
+                et2.setTextSize(14);
                 et2.setHeight(eett.getHeight());
                 et2.setWidth(eett.getWidth());
                 tr.addView(et2);
@@ -176,10 +181,12 @@ public class MainActivity extends AppCompatActivity {
 
                 et3=new EditText(context);
                 eett= findViewById(R.id.amount);
+                eett.setTextSize(14);
                 //set new id
                 et3.setId(extra_amount_count);
                 et3.setLayoutParams(new TableRow.LayoutParams(3));
                 et3.setHeight(eett.getHeight());
+                et3.setTextSize(14);
                 et3.setWidth(eett.getWidth());
                  tr.addView(et3);
 
@@ -214,16 +221,21 @@ public class MainActivity extends AppCompatActivity {
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
 
+
+
                 //create new exittext
                 tet1=new EditText(context);
                 //get the id of the existing edittext
                 eeettt= findViewById(R.id.tax);
+                eeettt.setTextSize(14);
                 //set new id
                 tet1.setLayoutParams(new TableRow.LayoutParams(1));
 
                 tet1.setId(tax_count);
                 tet1.setHeight(eeettt.getHeight());
                 tet1.setWidth(eeettt.getWidth());
+
+                tet1.setTextSize(14);
                 trr.addView(tet1);
 
 
@@ -231,9 +243,12 @@ public class MainActivity extends AppCompatActivity {
                 tet2=new EditText(context);
 
                 eeettt= findViewById(R.id.percentage);
+                eeettt.setTextSize(14);
                 //set new id
                 tet2.setId(percentage_count);
                 tet2.setLayoutParams(new TableRow.LayoutParams(2));
+
+                tet2.setTextSize(14);
 
                 tet2.setHeight(eeettt.getHeight());
                 tet2.setWidth(eeettt.getWidth());
@@ -243,10 +258,12 @@ public class MainActivity extends AppCompatActivity {
 
                 tet3=new EditText(context);
                 eeettt= findViewById(R.id.tax_amount);
+                eeettt.setTextSize(14);
                 //set new id
                 tet3.setId(tax_amount_count);
                 tet3.setLayoutParams(new TableRow.LayoutParams(3));
                 tet3.setHeight(eeettt.getHeight());
+                tet3.setTextSize(14);
                 tet3.setWidth(eeettt.getWidth());
                 trr.addView(tet3);
 
@@ -266,6 +283,13 @@ public class MainActivity extends AppCompatActivity {
 
     }  //end of function
 
+
+
+
+
+    public  float convertSpToPixels(float sp, Context context) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    }
 
 
 
@@ -296,7 +320,8 @@ public class MainActivity extends AppCompatActivity {
         float[] pointColumnWidths6 = {39F};
         float[] pointColumnWidths7 = {212F};
 
-        float [] pointColumnWidths8 ={383,212};
+        float [] pointColumnWidths8 ={383F,212F};
+        float [] pointColumnWidths9 ={39F};
 
         //for the lowermost row
 
@@ -448,7 +473,7 @@ public class MainActivity extends AppCompatActivity {
             //PdfPage pdfPage = pd.addNewPage();
             //set the column width
             Table table = new Table(pointColumnWidths);
-            table.setBorder(new SolidBorder(1));
+            //table.setBorderLeft(new SolidBorder(1.70f));
 
 
             table1 =new Table(pointColumnWidths6);
@@ -565,6 +590,7 @@ public class MainActivity extends AppCompatActivity {
             {
 
                 et = findViewById(11+(i-2));
+
                 cell1 = new Cell();
                 str = et.getText().toString();
                 if(str.isEmpty())
@@ -685,6 +711,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            table2.setBorderRight(new SolidBorder(0.5f));
+            table3.setBorderLeft(new SolidBorder(0.2f));
+
+
+            table2.setBorderBottom(new SolidBorder(0.2f));
+
             cell5=new Cell();
             cell5.add(table1);
             cell5.setPadding(0);
@@ -714,14 +746,47 @@ public class MainActivity extends AppCompatActivity {
 
 //added all the particulars correctly
 //add tax details
+            //sl no section for tax
+
+
 
             cell3 = new Cell();
             p = new Paragraph("\n ");
             p.setTextAlignment(TextAlignment.CENTER);
+            cell3.setBorder(new SolidBorder(1f));
+            cell3.setBorderRight(new SolidBorder(0.5f));
             cell3.add(p);
             table.addCell(cell3);
 
+  /*
 
+            table6=new Table(pointColumnWidths9);
+
+            for(int i=1;i<=numLinesinTax;i++) {
+
+             cell6 = new Cell();
+            p = new Paragraph("\n ");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell6.setBorder(Border.NO_BORDER);
+            cell6.add(p);
+            table6.addCell(cell6);
+            }
+
+            cell6 = new Cell();
+            p = new Paragraph("\n");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell6.add(p);
+            cell6.setHeight(cell_height);
+            cell6.setBorder(Border.NO_BORDER);
+            table6.addCell(cell6);
+
+            table6.setBorderLeft(new SolidBorder(1f));
+            //table6.setPadding(-3);
+            cell3=new Cell();
+            cell3.add(table6);
+            table.addCell(cell3);
+
+            */
 
 
 
@@ -735,12 +800,9 @@ public class MainActivity extends AppCompatActivity {
             table5= new Table(pointColumnWidths5);
 
 
-            //table2.setBorder(new SolidBorder(1));
-            //table3.setBorder(new SolidBorder(1));
-            //table5.setBorder(new SolidBorder(1));
 
-
-
+            table2.setBorder(new SolidBorder(0.2f));
+            table5.setBorder(new SolidBorder(0.5f));
 
             //add to left of table3
             //this is for seal
@@ -749,6 +811,8 @@ public class MainActivity extends AppCompatActivity {
             p.setTextAlignment(TextAlignment.CENTER);
             cell3.add(p);
             cell3.setPadding(0);
+
+
             cell3.setBorder(Border.NO_BORDER);
             table3.addCell(cell3);
 
@@ -789,12 +853,30 @@ public class MainActivity extends AppCompatActivity {
                 table5.addCell(cell1);
             }
 
+            //add one more row
+            cell1 = new Cell();
+            str="\n";
+            p = new Paragraph(str);
+            p.setTextAlignment(TextAlignment.CENTER);
+
+            cell1.add(p);
+              cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+
+            table5.addCell(cell1);
+
+
+
+            //convert
+
+
 
             cell7=new Cell();
             cell7.add(table5);
             //cell7.setBackgroundColor(myColor);
             cell7.setPadding(-3);
             cell7.setBorder(Border.NO_BORDER);
+            //cell7.setBorderRight(new SolidBorder(0.5f));
 
 
 
@@ -807,23 +889,23 @@ public class MainActivity extends AppCompatActivity {
 
             table2.addCell(cell4);
 
+
             //second row of table2
             //this is for full address
-
             cell3 = new Cell();
             p = new Paragraph("\n");
             p.setTextAlignment(TextAlignment.CENTER);
             cell3.add(p);
             cell3.setHeight(cell_height);
-
             table2.addCell(cell3);
 
 
-
+          //add table2 to table
             cell5=new Cell();
             cell5.add(table2);
             cell5.setPadding(0);
             cell5.setBorder(Border.NO_BORDER);
+            cell5.setBorderRight(new SolidBorder( 0.2f));
             table.addCell(cell5);
 
 
@@ -840,8 +922,8 @@ public class MainActivity extends AppCompatActivity {
                //add tax percentage and amount to a table
              table3=new Table(pointColumnWidths2);
 
-            //table2.setBorder(new SolidBorder(1));
-            //table3.setBorder(new SolidBorder(1));
+            table2.setBorder(new SolidBorder(0.5f));
+            table3.setBorder(new SolidBorder(0.5f));
 
 
 
@@ -906,6 +988,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            //add one more row
+            cell1 = new Cell();
+            str="\n";
+            p = new Paragraph(str);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.add(p);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            table3.addCell(cell1);
+
+
+            cell1 = new Cell();
+            str="\n";
+            p = new Paragraph(str);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.add(p);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            table3.addCell(cell1);
+
+
+
+
+            //convert table to a cell
             cell5=new Cell();
             cell5.add(table3);
             cell5.setPadding(0);
@@ -919,8 +1025,10 @@ public class MainActivity extends AppCompatActivity {
             cell3 = new Cell();
             p = new Paragraph("Authorized Signatory");
             p.setTextAlignment(TextAlignment.CENTER);
+
             cell3.add(p);
             cell3.setHeight(cell_height);
+            cell3.setBorderRight(new SolidBorder(0.5f));
             table2.addCell(cell3);
 
 
@@ -929,6 +1037,7 @@ public class MainActivity extends AppCompatActivity {
             cell5.add(table2);
             cell5.setPadding(-1);
             cell5.setBorder(Border.NO_BORDER);
+            cell5.setBorderRight(new SolidBorder(0.5f));
 
             //add the new cell to final table
             table.addCell(cell5);
@@ -947,6 +1056,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+            table.setBorder(new SolidBorder(0.75f));
 
 
             d.add(table);
