@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
         EditText et1,et2,et3,et4;
         String str, str2,str3,str4;
         Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7;
-        Table table1, table2, table3, table4, table5, table6;
+        Table table1, table2, table3, table4, table5, table6, table12, table13, table14,table15;
         Paragraph p;
 
 
@@ -322,6 +322,8 @@ public class MainActivity extends AppCompatActivity {
 
         float [] pointColumnWidths8 ={383F,212F};
         float [] pointColumnWidths9 ={39F};
+        float [] pointColumnWidths10 ={106F};
+
 
         //for the lowermost row
 
@@ -344,21 +346,6 @@ public class MainActivity extends AppCompatActivity {
             Document d = new Document(pd);
 
 
-            /*
-            PdfPage page = pd.addNewPage();
-            PdfCanvas pdfCanvas = new PdfCanvas(page);
-            Rectangle rectangle = new Rectangle(36, 650, 100, 100);
-            pdfCanvas.rectangle(rectangle);
-            pdfCanvas.stroke();
-            Canvas canvas = new Canvas(pdfCanvas, pd, rectangle);
-            PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-            PdfFont bold = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
-            Text title = new Text("The Strange Case of Dr. Jekyll and Mr. Hyde").setFont(bold);
-            Text author = new Text("Robert Louis Stevenson").setFont(font);
-            Paragraph p = new Paragraph().add(title).add(" by ").add(author);
-            canvas.add(p);
-            canvas.close();
-               */
 
 
 
@@ -473,25 +460,17 @@ public class MainActivity extends AppCompatActivity {
             //PdfPage pdfPage = pd.addNewPage();
             //set the column width
             Table table = new Table(pointColumnWidths);
-            //table.setBorderLeft(new SolidBorder(1.70f));
+
+            table.setBorder(new SolidBorder(0.25f));
 
 
             table1 =new Table(pointColumnWidths6);
             table2 =new Table(pointColumnWidths3);
             table3 =new Table(pointColumnWidths2);
 
-            //table1.setBorder(new SolidBorder(1));
-            //table2.setBorder(new SolidBorder(1));
-            //table3.setBorder(new SolidBorder(1));
 
-
-
-
-
-
-            //table1.setHeight(initial_table_heights);
-            //table2.setHeight(initial_table_heights);
-            //table3.setHeight(initial_table_heights);
+            table1.setBorderRight(new SolidBorder(0.25f));
+            table2.setBorderRight(new SolidBorder(0.25f));
 
             //header of the table
             cell1 = new Cell();
@@ -499,6 +478,9 @@ public class MainActivity extends AppCompatActivity {
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+
             table1.addCell(cell1);
 
 
@@ -507,18 +489,25 @@ public class MainActivity extends AppCompatActivity {
             p.setTextAlignment(TextAlignment.CENTER);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+            cell2.setBorderBottom(new SolidBorder(0.25f));
             table2.addCell(cell2);
 
 
             cell3 = new Cell();
             p= new Paragraph("Tax/Cess");
             p.setTextAlignment(TextAlignment.CENTER);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setBorderBottom(new SolidBorder(0.25f));
             cell3.add(p);
             table3.addCell(cell3);
 
             cell4 = new Cell();
             p= new Paragraph("Amount");
             p.setTextAlignment(TextAlignment.CENTER);
+            cell4.setBorder(Border.NO_BORDER);
+            cell4.setBorderBottom(new SolidBorder(0.25f));
+            cell4.setBorderLeft(new SolidBorder(0.25f));
             cell4.add(p);
             table3.addCell(cell4);
 
@@ -541,6 +530,8 @@ public class MainActivity extends AppCompatActivity {
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
             table1.addCell(cell1);
 
 
@@ -555,6 +546,8 @@ public class MainActivity extends AppCompatActivity {
             p.setTextAlignment(TextAlignment.CENTER);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+            cell2.setBorderBottom(new SolidBorder(0.25f));
             table2.addCell(cell2);
 
 
@@ -563,6 +556,8 @@ public class MainActivity extends AppCompatActivity {
             cell3 = new Cell();
             p = new Paragraph(" \n ");
             p.setTextAlignment(TextAlignment.CENTER);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setBorderBottom(new SolidBorder(0.25f));
             cell3.add(p);
             table3.addCell(cell3);
 
@@ -570,6 +565,9 @@ public class MainActivity extends AppCompatActivity {
 
             et = findViewById(R.id.amount);
             cell4 = new Cell();
+            cell4.setBorder(Border.NO_BORDER);
+            cell4.setBorderBottom(new SolidBorder(0.25f));
+            cell4.setBorderLeft(new SolidBorder(0.25f));
             str = et.getText().toString();
             p = new Paragraph(str);
             if(str.isEmpty())
@@ -584,8 +582,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Now get from 2nd row onwards
             // i must be >=2
-
-
             for(int i=2;i<=numLinesInParticulars;i++)
             {
 
@@ -601,6 +597,8 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell1.add(p);
                 cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                cell1.setBorder(Border.NO_BORDER);
+                cell1.setBorderBottom(new SolidBorder(0.25f));
                 table1.addCell(cell1);
 
 
@@ -615,15 +613,20 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell2.add(p);
                 cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                cell2.setBorder(Border.NO_BORDER);
+                cell2.setBorderBottom(new SolidBorder(0.25f));
                 table2.addCell(cell2);
 
 
 
                 cell3 = new Cell();
+                cell3.setBorder(Border.NO_BORDER);
+                cell3.setBorderBottom(new SolidBorder(0.25f));
                 p = new Paragraph(" \n ");
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell3.add(p);
                 table3.addCell(cell3);
+
 
                 et = findViewById(1111+(i-2));
                 cell4 = new Cell();
@@ -634,6 +637,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
+                cell4.setBorder(Border.NO_BORDER);
+                cell4.setBorderBottom(new SolidBorder(0.25f));
+                cell4.setBorderLeft(new SolidBorder(0.25f));
                 cell4.add(p);
                 table3.addCell(cell4);
 
@@ -644,11 +650,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+            //spare cell to set height
+
+
                 cell1 = new Cell();
-                str="\n";
+                str="h\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell1.add(p);
+               cell1.setBorder(Border.NO_BORDER);
+               cell1.setBorderBottom(new SolidBorder(0.25f));
                 cell1.setHeight(initial_table_heights);
             if(numLinesInParticulars<=2)
             {
@@ -660,10 +672,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell2 = new Cell();
-                str="\n";
+                str="hh\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell2.add(p);
+            cell2.setBorder(Border.NO_BORDER);
+            cell2.setBorderBottom(new SolidBorder(0.25f));
                 cell2.setHeight(initial_table_heights);
                 if(numLinesInParticulars<=2)
                 {
@@ -675,9 +689,11 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell3 = new Cell();
-                p = new Paragraph(" \n ");
+                p = new Paragraph(" hhh\n ");
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setBorderBottom(new SolidBorder(0.25f));
                 cell3.setHeight(initial_table_heights);
             if(numLinesInParticulars<=2)
             {
@@ -688,10 +704,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell4 = new Cell();
-                str="\n";
+                str="hhh\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell4.add(p);
+            cell4.setBorder(Border.NO_BORDER);
+            cell4.setBorderBottom(new SolidBorder(0.25f));
+
                 cell4.setHeight(initial_table_heights);
             if(numLinesInParticulars<=2)
             {
@@ -704,19 +723,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-            table2.setBorderRight(new SolidBorder(0.5f));
-            table3.setBorderLeft(new SolidBorder(0.2f));
-
-
-            table2.setBorderBottom(new SolidBorder(0.2f));
-
             cell5=new Cell();
             cell5.add(table1);
             cell5.setPadding(0);
@@ -724,7 +730,7 @@ public class MainActivity extends AppCompatActivity {
             table.addCell(cell5);
 
 
-
+            //add table2
             cell5=new Cell();
             cell5.add(table2);
             cell5.setPadding(0);
@@ -733,11 +739,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            //add table3
             cell5=new Cell();
             cell5.add(table3);
             cell5.setPadding(0);
             cell5.setBorder(Border.NO_BORDER);
             table.addCell(cell5);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -753,56 +773,34 @@ public class MainActivity extends AppCompatActivity {
             cell3 = new Cell();
             p = new Paragraph("\n ");
             p.setTextAlignment(TextAlignment.CENTER);
-            cell3.setBorder(new SolidBorder(1f));
-            cell3.setBorderRight(new SolidBorder(0.5f));
+
             cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setBorderRight(new SolidBorder(0.25f));
             table.addCell(cell3);
 
-  /*
-
-            table6=new Table(pointColumnWidths9);
-
-            for(int i=1;i<=numLinesinTax;i++) {
-
-             cell6 = new Cell();
-            p = new Paragraph("\n ");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell6.setBorder(Border.NO_BORDER);
-            cell6.add(p);
-            table6.addCell(cell6);
-            }
-
-            cell6 = new Cell();
-            p = new Paragraph("\n");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell6.add(p);
-            cell6.setHeight(cell_height);
-            cell6.setBorder(Border.NO_BORDER);
-            table6.addCell(cell6);
-
-            table6.setBorderLeft(new SolidBorder(1f));
-            //table6.setPadding(-3);
-            cell3=new Cell();
-            cell3.add(table6);
-            table.addCell(cell3);
-
-            */
 
 
 
-            table2 = new Table(pointColumnWidths3); //single
-
-           //first row of table2
-            table3= new Table(pointColumnWidths4);  //divide into 2
-
-            table4= new Table(pointColumnWidths5);
-
-            table5= new Table(pointColumnWidths5);
 
 
+            table12 = new Table(pointColumnWidths3); //single
 
-            table2.setBorder(new SolidBorder(0.2f));
-            table5.setBorder(new SolidBorder(0.5f));
+            table13= new Table(pointColumnWidths4);  //divide into 2
+
+            table14= new Table(pointColumnWidths5);
+
+            table15= new Table(pointColumnWidths5);
+
+
+            //set all the table border to null
+            table12.setBorder(Border.NO_BORDER);
+            table13.setBorder(Border.NO_BORDER);
+            table14.setBorder(Border.NO_BORDER);
+            table15.setBorder(Border.NO_BORDER);
+
+
+
 
             //add to left of table3
             //this is for seal
@@ -810,15 +808,16 @@ public class MainActivity extends AppCompatActivity {
             p = new Paragraph("\n");
             p.setTextAlignment(TextAlignment.CENTER);
             cell3.add(p);
-            cell3.setPadding(0);
-
-
             cell3.setBorder(Border.NO_BORDER);
-            table3.addCell(cell3);
+            cell3.setBorderRight(new SolidBorder(0.25f));
+            cell3.setBorderBottom(new SolidBorder(0.25f));
+            //add left of table 13
+            table13.addCell(cell3);
 
 
 
 
+            //add initial type of tax
             et = findViewById(R.id.tax);
             cell1 = new Cell();
             str = et.getText().toString();
@@ -830,9 +829,12 @@ public class MainActivity extends AppCompatActivity {
             cell1.add(p);
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table5.addCell(cell1);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            table15.addCell(cell1);
 
 
+            //add all the remaining tax items
             for(int i=2;i<=numLinesinTax;i++) {
 
                 et = findViewById(55+(i-2));
@@ -847,13 +849,12 @@ public class MainActivity extends AppCompatActivity {
 
                 cell1.add(p);
                 cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                // cell1.setPadding(0);
-                // cell1.setBorder(Border.NO_BORDER);
-
-                table5.addCell(cell1);
+                cell1.setBorder(Border.NO_BORDER);
+                cell1.setBorderBottom(new SolidBorder(0.25f));
+                table15.addCell(cell1);
             }
 
-            //add one more row
+            //add one more row for offseting the full amount in words
             cell1 = new Cell();
             str="\n";
             p = new Paragraph(str);
@@ -861,51 +862,54 @@ public class MainActivity extends AppCompatActivity {
 
             cell1.add(p);
               cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-
-
-            table5.addCell(cell1);
+              cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+                table15.addCell(cell1);
 
 
 
             //convert
-
-
-
             cell7=new Cell();
-            cell7.add(table5);
+            cell7.add(table15);
             //cell7.setBackgroundColor(myColor);
-            cell7.setPadding(-3);
+
+            cell7.setPadding(0);
             cell7.setBorder(Border.NO_BORDER);
-            //cell7.setBorderRight(new SolidBorder(0.5f));
+            //cell7.setBorderTop(Border.NO_BORDER);
 
 
 
-            table3.addCell(cell7);
+            //add right of table13
+            table13.addCell(cell7);
 
 
             //first row of table2
             cell4=new Cell();
-            cell4.add(table3);
+            cell4.setPadding(-2);
+            cell4.setBorder(Border.NO_BORDER);
 
-            table2.addCell(cell4);
+            cell4.add(table13);
+               table12.addCell(cell4);
 
 
-            //second row of table2
+            //second row of table12
             //this is for full address
             cell3 = new Cell();
             p = new Paragraph("\n");
             p.setTextAlignment(TextAlignment.CENTER);
             cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+            //cell3.setBorderTop(new SolidBorder(0.25f));
             cell3.setHeight(cell_height);
-            table2.addCell(cell3);
+            table12.addCell(cell3);
 
 
-          //add table2 to table
+
+          //add table12 to table
             cell5=new Cell();
-            cell5.add(table2);
-            cell5.setPadding(0);
             cell5.setBorder(Border.NO_BORDER);
-            cell5.setBorderRight(new SolidBorder( 0.2f));
+            cell5.setBorderRight(new SolidBorder(0.25f));
+            cell5.add(table12);
             table.addCell(cell5);
 
 
@@ -913,6 +917,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+//for right side
 
 
 
@@ -921,12 +926,19 @@ public class MainActivity extends AppCompatActivity {
              table2=new Table(pointColumnWidths7);
                //add tax percentage and amount to a table
              table3=new Table(pointColumnWidths2);
+            table4=new Table(pointColumnWidths10);
+            //add tax percentage and amount to a table
+            table5=new Table(pointColumnWidths10);
 
-            table2.setBorder(new SolidBorder(0.5f));
-            table3.setBorder(new SolidBorder(0.5f));
 
 
+            table3.setBorder(Border.NO_BORDER);
+            table2.setBorder(Border.NO_BORDER);
+            table4.setBorder(Border.NO_BORDER);
+            table5.setBorder(Border.NO_BORDER);
 
+
+            table3.setBorderBottom(new SolidBorder(0.25f));
 
             et = findViewById(R.id.percentage);
                 cell1 = new Cell();
@@ -939,7 +951,11 @@ public class MainActivity extends AppCompatActivity {
                 cell1.add(p);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-           table3.addCell(cell1);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            cell1.setBorderRight(new SolidBorder(0.25f));
+
+           table4.addCell(cell1);
 
 
             et = findViewById(R.id.tax_amount);
@@ -953,7 +969,12 @@ public class MainActivity extends AppCompatActivity {
             cell1.add(p);
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table3.addCell(cell1);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            //cell1.setHeight(findViewById(R.id.tax).getHeight());
+
+            table5.addCell(cell1);
+
 
             for(int i=2;i<=numLinesinTax;i++) {
 
@@ -969,7 +990,13 @@ public class MainActivity extends AppCompatActivity {
 
                 cell1.add(p);
                 cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table3.addCell(cell1);
+                cell1.setBorder(Border.NO_BORDER);
+                cell1.setBorderBottom(new SolidBorder(0.25f));
+                //cell1.setBorderTop(new SolidBorder(0.25f));
+                cell1.setBorderRight(new SolidBorder(0.25f));
+
+
+                table4.addCell(cell1);
 
 
                 et = findViewById(5555+(i-2));
@@ -984,7 +1011,10 @@ public class MainActivity extends AppCompatActivity {
 
                 cell1.add(p);
                 cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table3.addCell(cell1);
+                cell1.setBorder(Border.NO_BORDER);
+                cell1.setBorderBottom(new SolidBorder(0.25f));
+
+                table5.addCell(cell1);
 
             }
 
@@ -996,7 +1026,9 @@ public class MainActivity extends AppCompatActivity {
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
-            table3.addCell(cell1);
+
+
+            table4.addCell(cell1);
 
 
             cell1 = new Cell();
@@ -1006,38 +1038,60 @@ public class MainActivity extends AppCompatActivity {
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
-            table3.addCell(cell1);
+            table5.addCell(cell1);
 
 
 
 
             //convert table to a cell
             cell5=new Cell();
-            cell5.add(table3);
+            cell5.add(table4);
             cell5.setPadding(0);
             cell5.setBorder(Border.NO_BORDER);
+
+            cell6=new Cell();
+            cell6.add(table5);
+            cell6.setPadding(0);
+            cell6.setBorder(Border.NO_BORDER);
+
+
+            //add left and right of table3
+            table3.addCell(cell5);
+            table3.addCell(cell6);
+
+
+
+            //convert table3 to a cell and aadd as the first row of table2
+
+            cell5=new Cell();
+            cell5.add(table3);
+            cell5.setBorder(Border.NO_BORDER);
+            cell5.setPadding(-2);
             table2.addCell(cell5);
 
 
-
             //second row of table2
+
             //this is for sign
             cell3 = new Cell();
             p = new Paragraph("Authorized Signatory");
             p.setTextAlignment(TextAlignment.CENTER);
 
+            //cell3.setPadding(-2);
             cell3.add(p);
             cell3.setHeight(cell_height);
-            cell3.setBorderRight(new SolidBorder(0.5f));
-            table2.addCell(cell3);
+            cell3.setBorder(Border.NO_BORDER);
+            //cell3.setBorderTop(new SolidBorder(0.25f));
+             table2.addCell(cell3);
+
+
+
 
 
             //now create a new cell to add table2
             cell5=new Cell();
             cell5.add(table2);
-            cell5.setPadding(-1);
             cell5.setBorder(Border.NO_BORDER);
-            cell5.setBorderRight(new SolidBorder(0.5f));
 
             //add the new cell to final table
             table.addCell(cell5);
@@ -1047,20 +1101,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+         //final adding of the table
 
 
 
-
-
-
-
-
-
-
-
-            table.setBorder(new SolidBorder(0.75f));
-
-
+            //add table1
             d.add(table);
             d.close();
 
@@ -1070,7 +1115,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    }
+    }//end of function
 
 
 
@@ -1082,713 +1127,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-    private  void createPdf2() throws FileNotFoundException {
-        PdfWriter pw;
-        EditText et;
-        String str;
-        Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7;
-        Table table2, table3, table4, table5, table6;
-
-        Color headerBg = new Color();
-        com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(255, 100, 20);
-
-
-        float[] pointColumnWidths = {39F, 344F,212F};
-        float[] pointColumnWidths2 = {106F,106F};
-        float[] pointColumnWidths3 = {344F};
-        float[] pointColumnWidths4 = {172F,172F};
-        float[] pointColumnWidths5 = {172F};
-
-        final Context context = this;
-        try {
-
-            //File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "Your directory name");
-            File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "prakriti");
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            File filename = new File(folder, "invoice.pdf");
-
-            if (filename.exists()) {
-                filename.delete();
-            }
-            pw = new PdfWriter(filename);
-            PdfDocument pd = new PdfDocument(pw);
-            Document d = new Document(pd);
-
-            //PdfPage pdfPage = pd.addNewPage();
-            //set the column width
-            Table table = new Table(pointColumnWidths);
-
-            //header of the table
-            cell1 = new Cell();
-            Paragraph p= new Paragraph("Sl No");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.addCell(cell1);
-
-
-            cell2 = new Cell();
-            p= new Paragraph("Description");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell2.add(p);
-            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.addCell(cell2);
-
-
-
-            table2=new Table(pointColumnWidths2);
-
-            cell3 = new Cell();
-            p= new Paragraph("Tax/Cess");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            //cell3.setBackgroundColor(myColor);
-            table2.addCell(cell3);
-
-            cell4 = new Cell();
-            p= new Paragraph("Amount");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell4.add(p);
-            //cell4.setBackgroundColor(myColor);
-            table2.addCell(cell4);
-
-            cell5=new Cell();
-            cell5.add(table2);
-            cell5.setPadding(0);
-            cell5.setBorder(Border.NO_BORDER);
-            table.addCell(cell5);
-
-             //add the content
-
-
-
-
-
-
-            //first add the first id data
-            et = findViewById(R.id.sl);
-            cell1 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.addCell(cell1);
-
-
-            et = findViewById(R.id.description);
-            cell2 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell2.add(p);
-            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.addCell(cell2);
-
-
-
-          table2=new Table(pointColumnWidths2);
-
-
-
-            cell3 = new Cell();
-            p = new Paragraph(" ");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            cell3.setBackgroundColor(myColor);
-            table2.addCell(cell3);
-
-
-
-            et = findViewById(R.id.amount);
-            cell4 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell4.add(p);
-            cell4.setBackgroundColor(myColor);
-            table2.addCell(cell4);
-
-            cell5=new Cell();
-            cell5.add(table2);
-            cell5.setPadding(-1);
-            cell5.setBorder(Border.NO_BORDER);
-            table.addCell(cell5);
-
-
-            //Now get from 2nd row onwards
-            // i must be >=2
-
-
-            for(int i=2;i<=numLinesInParticulars;i++)
-            {
-
-                et = findViewById(11+(i-2));
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-
-                table.addCell(cell1);
-
-                et = findViewById(111+(i-2));
-                cell2 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell2.add(p);
-                cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table.addCell(cell2);
-
-                table2=new Table(pointColumnWidths2);
-
-                cell3 = new Cell();
-                p = new Paragraph("");
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell3.add(p);
-                table2.addCell(cell3);
-
-                et = findViewById(1111+(i-2));
-                cell4 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell4.add(p);
-                table2.addCell(cell4);
-
-                cell5=new Cell();
-                cell5.add(table2);
-                cell5.setPadding(0);
-                cell5.setBorder(Border.NO_BORDER);
-                table.addCell(cell5);
-
-
-            }//for loop
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //tax
-
-            cell3 = new Cell();
-            p = new Paragraph("sl");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            table.addCell(cell3);
-
-            table2 = new Table(pointColumnWidths3); //single
-
-
-
-
-
-            //first row of table2
-            table3= new Table(pointColumnWidths4);  //divide into 2
-
-            table4= new Table(pointColumnWidths5);
-
-
-                                                 //add to left of table3
-            cell3 = new Cell();
-            p = new Paragraph("seal");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            cell3.setPadding(0);
-            cell3.setBorder(Border.NO_BORDER);
-            table4.addCell(cell3);
-
-
-            table5= new Table(pointColumnWidths5);
-
-            et = findViewById(R.id.tax);
-            cell1 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-
-            table5.addCell(cell1);
-
-
-            for(int i=2;i<=numLinesinTax;i++) {
-
-                et = findViewById(55+(i-2));
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-               // cell1.setPadding(0);
-               // cell1.setBorder(Border.NO_BORDER);
-
-                table5.addCell(cell1);
-            }
-
-
-
-            cell6=new Cell();
-            cell6.add(table4);
-            cell6.setPadding(0);
-            cell6.setBorder(Border.NO_BORDER);
-
-
-            cell7=new Cell();
-            cell7.add(table5);
-            cell7.setPadding(0);
-            cell7.setBorder(Border.NO_BORDER);
-            cell7.setBorderRight(Border.NO_BORDER);
-
-            table3.addCell(cell6);
-            table3.setBorderRight(Border.NO_BORDER);
-            table3.addCell(cell7);
-
-
-            //first row of table2
-           cell4=new Cell();
-           cell4.add(table3);
-
-
-           table2.addCell(cell4);
-
-            //second row of table2
-            cell3 = new Cell();
-            p = new Paragraph("hh");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-
-            //cell3.setPadding(0);
-            //cell3.setBorder(Border.NO_BORDER);
-
-            table2.addCell(cell3);
-
-
-
-            cell5=new Cell();
-            cell5.add(table2);
-
-
-            cell5.setPadding(0);
-            cell5.setBorder(Border.NO_BORDER);
-            table.addCell(cell5);
-
-
-
-            cell3 = new Cell();
-            p = new Paragraph("third");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            //cell3.setPadding(0);
-            //cell3.setBorder(Border.NO_BORDER);
-
-            table.addCell(cell3);
-
-
-
-
-
-
-
-
-
-
-
-
-            d.add(table);
-            d.close();
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    
-
-
-
-
-
-    
-    
-
-    private void createPdf() throws FileNotFoundException
-    {
-
-        PdfWriter pw;
-       EditText et;
-       String str;
-       Cell cell1, cell2, cell3, cell4,cell5,cell6,cell7;
-        Table table2,table3,table4,table5,table6;
-        float [] pointColumnWidths2 = {172F,172F};
-        float [] pointColumnWidths3 = {172F};
-        float [] pointColumnWidths4 = {106F};
-
-       // til=findViewById(R.id.ip);
-        final Context context = this;
-        try {
-
-           //File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "Your directory name");
-            File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "prakriti");
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            File filename = new File(folder, "invoice.pdf");
-
-            if(filename.exists())
-            {
-                filename.delete();
-            }
-
-            pw = new PdfWriter(filename);
-            PdfDocument pd=new PdfDocument(pw);
-            Document d =new Document(pd);
-
-
-
-
-            //set the column width
-            float [] pointColumnWidths = {39F,344F,106,106};
-            Table table = new Table(pointColumnWidths);
-
-
-            //header of the table
-             cell1 = new Cell();
-            Paragraph p= new Paragraph("Sl No");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.addCell(cell1);
-
-
-            cell2 = new Cell();
-             p= new Paragraph("Description");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell2.add(p);
-            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.addCell(cell2);
-
-
-             cell3 = new Cell();
-            p= new Paragraph("Tax/Cess");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            table.addCell(cell3);
-
-             cell4 = new Cell();
-            p= new Paragraph("Amount");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell4.add(p);
-            table.addCell(cell4);
-
-
-
-
-
-  //experimental row
-
-
-           //only one particular
-            if(numLinesInParticulars==1) {
-
-
-                et = findViewById(R.id.sl);
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table.addCell(cell1);
-
-
-                et = findViewById(R.id.description);
-                cell2 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell2.add(p);
-                cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table.addCell(cell2);
-
-
-                cell3 = new Cell();
-                p = new Paragraph("");
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell3.add(p);
-                table.addCell(cell3);
-
-
-                et = findViewById(R.id.amount);
-                cell4 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell4.add(p);
-                table.addCell(cell4);
-            }
-
-            //number of particulars >1
-            if(numLinesInParticulars>1)
-            {
-
-                //first add the first id data
-                et = findViewById(R.id.sl);
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table.addCell(cell1);
-
-
-                et = findViewById(R.id.description);
-                cell2 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell2.add(p);
-                cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table.addCell(cell2);
-
-
-                cell3 = new Cell();
-                p = new Paragraph("");
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell3.add(p);
-                table.addCell(cell3);
-
-
-                et = findViewById(R.id.amount);
-                cell4 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell4.add(p);
-                table.addCell(cell4);
-
-                //Now get from 2nd row onwards
-                // i must be >=2
-
-                for(int i=2;i<=numLinesInParticulars;i++)
-                {
-
-                    et = findViewById(11+(i-2));
-                    cell1 = new Cell();
-                    str = et.getText().toString();
-                    p = new Paragraph(str);
-                    p.setTextAlignment(TextAlignment.CENTER);
-                    cell1.add(p);
-                    cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                    table.addCell(cell1);
-
-
-
-
-                    et = findViewById(111+(i-2));
-                    cell2 = new Cell();
-                    str = et.getText().toString();
-                    p = new Paragraph(str);
-                    p.setTextAlignment(TextAlignment.CENTER);
-                    cell2.add(p);
-                    cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                    table.addCell(cell2);
-
-
-
-
-                    cell3 = new Cell();
-                    p = new Paragraph("");
-                    p.setTextAlignment(TextAlignment.CENTER);
-                    cell3.add(p);
-                    table.addCell(cell3);
-
-
-                    et = findViewById(1111+(i-2));
-                    cell4 = new Cell();
-                    str = et.getText().toString();
-                    p = new Paragraph(str);
-                    p.setTextAlignment(TextAlignment.CENTER);
-                    cell4.add(p);
-                    table.addCell(cell4);
-
-
-                      
-
-                }//for loop
-
-
-
-
-            }//closing for greater than or equal to 2
-
-           //handle for lines in the tax sections
-
-
-
-            //extremely outside sl no
-            cell3 = new Cell();
-            p = new Paragraph("");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.add(p);
-            table.addCell(cell3);
-
-
-
-            //create a new table at this point to encompass  the vacent space and the rows
-            table2 = new Table(pointColumnWidths2);
-
-            //add left of the inside table
-            cell3 = new Cell();
-            p = new Paragraph("");
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell3.setBorder(Border.NO_BORDER);
-            cell3.add(p);
-            table2.addCell(cell3);
-
-
-            //create another table for the right of inside thable
-            table3 = new Table(pointColumnWidths3);
-
-
-            et = findViewById(R.id.tax);
-            cell1 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.setBorderRight(Border.NO_BORDER);
-            cell1.setBorderTop(Border.NO_BORDER);
-            cell1.setBorderLeft(Border.NO_BORDER);
-
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table3.addCell(cell1);
-
-            for(int i=2;i<=numLinesinTax;i++) {
-
-                et = findViewById(55+(i-2));
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-
-                cell1.setBorderRight(Border.NO_BORDER);
-                cell1.setBorderTop(Border.NO_BORDER);
-                cell1.setBorderLeft(Border.NO_BORDER);
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table3.addCell(cell1);
-
-
-
-            }
-
-
-                //create a new cell to encapsulate table 3;
-            cell4 = new Cell();
-            cell4.add(table3);
-            table2.addCell(cell4);
-
-
-            cell5=new Cell();
-            cell5.add(table2);
-            table.addCell(cell5);
-
-
-
-            //at this point add the percentage data
-            // create another table2
-            table4 = new Table(pointColumnWidths4);
-
-            et = findViewById(R.id.percentage);
-            cell1 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table4.addCell(cell1);
-
-
-            for(int i=2;i<=numLinesinTax;i++) {
-
-                et = findViewById(555+(i-2));
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table4.addCell(cell1);
-
-            }
-            //convert table4 to a cell
-            cell5=new Cell();
-            cell5.add(table4);
-            table.addCell(cell5);
-
-
-
-            //now add the tax_amount
-            table5 = new Table(pointColumnWidths4);
-            et = findViewById(R.id.tax_amount);
-            cell1 = new Cell();
-            str = et.getText().toString();
-            p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.add(p);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            table5.addCell(cell1);
-
-            for(int i=2;i<=numLinesinTax;i++) {
-
-                et = findViewById(5555+(i-2));
-                cell1 = new Cell();
-                str = et.getText().toString();
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
-                cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                table5.addCell(cell1);
-
-            }
-            cell6=new Cell();
-            cell6.add(table5);
-            table.addCell(cell6);
-
-
-
-
-
-
-            //add to the table the rows
-            d.add(table);
-            d.close();
-
-
-
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
 
 
 
