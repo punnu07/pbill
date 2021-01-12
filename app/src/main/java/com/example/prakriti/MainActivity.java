@@ -2,11 +2,14 @@ package com.example.prakriti;
 
 
 //import com.itextpdf.kernel.colors.Color;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.fonts.Font;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -43,6 +46,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 import com.itextpdf.layout.element.Table;
@@ -293,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private  void createPdf3() throws FileNotFoundException {
         PdfWriter pw;
         EditText et1,et2,et3,et4;
@@ -392,6 +399,13 @@ public class MainActivity extends AppCompatActivity {
             p= new Paragraph(redText);
             p.add(str3);
             p.add(str);
+
+            Date c = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String formattedDate = df.format(c);
+            p.add("\n");
+            p.add(formattedDate);
+
 
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
@@ -655,7 +669,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell1 = new Cell();
-                str="h\n";
+                str="\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell1.add(p);
@@ -672,7 +686,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell2 = new Cell();
-                str="hh\n";
+                str="\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell2.add(p);
@@ -689,7 +703,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell3 = new Cell();
-                p = new Paragraph(" hhh\n ");
+                p = new Paragraph(" \n ");
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell3.add(p);
             cell3.setBorder(Border.NO_BORDER);
@@ -704,7 +718,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 cell4 = new Cell();
-                str="hhh\n";
+                str="\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell4.add(p);
@@ -1027,7 +1041,6 @@ public class MainActivity extends AppCompatActivity {
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
 
-
             table4.addCell(cell1);
 
 
@@ -1074,7 +1087,7 @@ public class MainActivity extends AppCompatActivity {
 
             //this is for sign
             cell3 = new Cell();
-            p = new Paragraph("Authorized Signatory");
+            p = new Paragraph("\n\n\n\n Authorized Signatory");
             p.setTextAlignment(TextAlignment.CENTER);
 
             //cell3.setPadding(-2);
