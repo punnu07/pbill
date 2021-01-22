@@ -94,6 +94,100 @@ public class MainActivity extends AppCompatActivity {
     int max_number_of_tax_rows=5;
 
 
+//number conversion logic
+
+    private static final String[] units = {
+            "",
+            " one",
+            " two",
+            " three",
+            " four",
+            " five",
+            " six",
+            " seven",
+            " eight",
+            " nine"
+    };
+    private static final String[] twoDigits = {
+            " ten",
+            " eleven",
+            " twelve",
+            " thirteen",
+            " fourteen",
+            " fifteen",
+            " sixteen",
+            " seventeen",
+            " eighteen",
+            " nineteen"
+    };
+    private static final String[] tenMultiples = {
+            "",
+            "",
+            " twenty",
+            " thirty",
+            " forty",
+            " fifty",
+            " sixty",
+            " seventy",
+            " eighty",
+            " ninety"
+    };
+    private static final String[] placeValues = {
+            "",
+            " thousand",
+            " lakh",
+            " crore",
+            " arab",
+            " kharab"
+    };
+
+    private static String convertNumber(long number) {
+        String word = "";
+        int index = 0;
+        boolean firstIteration = true;
+        int divisor;
+        do {
+            divisor = firstIteration ? 1000 : 100;
+            // take 3 or 2 digits based on iteration
+            int num = (int)(number % divisor);
+            if (num != 0){
+                String str = ConversionForUptoThreeDigits(num);
+                word = str + placeValues[index] + word;
+            }
+            index++;
+            // next batch of digits
+            number = number/divisor;
+            firstIteration = false;
+        } while (number > 0);
+        return word;
+    }
+
+    private static String ConversionForUptoThreeDigits(int number) {
+        String word = "";
+        int num = number % 100;
+        if(num < 10){
+            word = word + units[num];
+        }
+        else if(num < 20){
+            word = word + twoDigits[num%10];
+        }else{
+            word = tenMultiples[num/10] + units[num%10];
+        }
+
+        word = (number/100 > 0)? units[number/100] + " hundred" + word : word;
+        return word;
+    }
+
+
+
+    //end of number conversion logic
+
+
+
+
+
+
+
 
 
 
@@ -105,6 +199,11 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setVmPolicy(builder.build());
         setContentView(R.layout.activity_main);
        addListenerOnButton();
+
+       //adding to the database
+        //DatabaseAdaptor db = new DatabaseAdaptor(this);
+        //db.addConstant("BaseYear", "2020-2021");
+
     }
 
 //start of function
@@ -130,6 +229,29 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
+
+        myButton= findViewById(R.id.Settings);
+
+        myButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0)
+            {
+
+
+
+                Intent intent = new Intent(context, MainActivity4.class);
+                startActivity(intent);
+
+            }
+
+        });
+
+
+
+
 
 
 
@@ -316,6 +438,8 @@ public class MainActivity extends AppCompatActivity {
         et1=findViewById(R.id.client_address);
         et2=findViewById(R.id.project_details);
         et3=findViewById(R.id.invoice_no);
+        et4=findViewById(R.id.date);
+
 
 
 
@@ -404,7 +528,8 @@ public class MainActivity extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String formattedDate = df.format(c);
             p.add("\n");
-            p.add(formattedDate);
+            p.add(et4.getText().toString());
+            //p.add(formattedDate);
 
 
             p.setTextAlignment(TextAlignment.LEFT);
@@ -439,6 +564,7 @@ public class MainActivity extends AppCompatActivity {
             //client details
              redText = new Text("Client Name & Address\n").setFontColor(myColor).setBold().setUnderline();
             str2="Client Name & Address\n";
+
             str=et1.getText().toString();
             cell2 = new Cell();
             p= new Paragraph(redText);
@@ -871,6 +997,7 @@ public class MainActivity extends AppCompatActivity {
             //add one more row for offseting the full amount in words
             cell1 = new Cell();
             str="\n";
+            //str="In Words";
             p = new Paragraph(str);
             p.setTextAlignment(TextAlignment.CENTER);
 
@@ -1032,21 +1159,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            //at this point et points to the final amount
+            str = et.getText().toString();
+
+            //long final_amount = Long.parseLong(str);
+            //String digit_in_words=convertNumber(final_amount);
+
+
             //add one more row
             cell1 = new Cell();
             str="\n";
+            //str="Rs/-";
             p = new Paragraph(str);
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
-
             table4.addCell(cell1);
+
 
 
             cell1 = new Cell();
             str="\n";
             p = new Paragraph(str);
+            //p=new Paragraph(digit_in_words);
             p.setTextAlignment(TextAlignment.CENTER);
             cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);

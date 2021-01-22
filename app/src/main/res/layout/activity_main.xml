@@ -27,14 +27,13 @@
         android:layout_width="107dp"
         android:layout_height="37dp"
         android:layout_marginBottom="4dp"
-        android:text="proceed"
+        android:text="Proceed"
         app:backgroundTint="#D48181"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout4"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout4" />
 
     <TableLayout
         android:id="@+id/tableLayout2"
@@ -147,11 +146,11 @@
 
     <EditText
         android:id="@+id/invoice_no"
-        android:layout_width="88dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="80dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Invoice no"
         android:inputType="textPersonName"
@@ -166,11 +165,11 @@
         android:layout_height="37dp"
         android:layout_marginStart="304dp"
         android:layout_marginLeft="304dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="4dp"
         android:text="Add Row"
         app:backgroundTint="#B8A5A5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/invoice_no" />
+        app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <TextView
         android:id="@+id/textView2"
@@ -314,10 +313,37 @@
         android:gravity="start|top"
         android:hint="Client Address"
         android:inputType="textMultiLine"
+        android:lines="6"
         android:maxLines="6"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="80sp"
+        android:layout_height="34sp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/project_details"
+        app:layout_constraintTop_toBottomOf="@+id/invoice_no" />
+
+    <Button
+        android:id="@+id/Settings"
+        android:layout_width="107dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="4dp"
+        android:text="Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
