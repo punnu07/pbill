@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -200,9 +201,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
        addListenerOnButton();
 
-       //adding to the database
-        //DatabaseAdaptor db = new DatabaseAdaptor(this);
-        //db.addConstant("BaseYear", "2020-2021");
+
+
+
+
 
     }
 
@@ -434,6 +436,7 @@ public class MainActivity extends AppCompatActivity {
         Color headerBg = new Color();
         com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(0, 55, 130);
         com.itextpdf.kernel.colors.Color myColorBlack = new DeviceRgb(0, 0, 0);
+        com.itextpdf.kernel.colors.Color myColorRed = new DeviceRgb(255, 0, 0);
 
         et1=findViewById(R.id.client_address);
         et2=findViewById(R.id.project_details);
@@ -512,13 +515,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            DatabaseAdaptor db = new DatabaseAdaptor(this);
+            ArrayList<String> constantArrayList= db.getAllConstants();
+            ArrayList <String> valueArrayList=db.getAllValues();
+            if(constantArrayList.isEmpty())
+            {
+
+                Toast.makeText(MainActivity.this,"empty", Toast.LENGTH_LONG).show();
+                db.addConstant("BaseYear", "2020-2021");
+
+
+            }
+
+
+
 
             //add invoice
 
-            str=et3.getText().toString();
+            Text invNum=new Text(et3.getText().toString()).setFontColor(myColorRed);
+            str="PAB-"+et3.getText().toString()+"/"+valueArrayList.get(0);;
             redText = new Text("INVOICE\n").setFontColor(myColor).setBold();
 
+
            str3="No:-";
+
+
             cell2 = new Cell();
             p= new Paragraph(redText);
             p.add(str3);
