@@ -6,7 +6,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.fonts.Font;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -26,6 +29,10 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.colors.WebColors;
 import com.itextpdf.kernel.font.PdfFont;
@@ -40,6 +47,10 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
+
+//import com.itextpdf.text.Image;
+
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 
 import java.io.File;
@@ -52,10 +63,13 @@ import java.util.Date;
 import java.util.Locale;
 
 
+
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+import com.itextpdf.layout.property.VerticalAlignment;
 
 import org.w3c.dom.Element;
 
@@ -86,13 +100,18 @@ public class MainActivity extends AppCompatActivity {
     float cell_height=100;
 
     //minimum table height
-    float initial_table_heights=130;
+    float initial_table_heights=20;
 
     //max_table height
-    float max_table_height=250;
+    float max_table_height=150;
+
+    float intermediate_table_height=120;
 
     int max_number_of_particular_rows=4;
     int max_number_of_tax_rows=5;
+
+    int client_address_lines=0;
+    int project_details_lines=0;
 
 
 //number conversion logic
@@ -422,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+//create the pdf
     @RequiresApi(api = Build.VERSION_CODES.N)
     private  void createPdf3() throws FileNotFoundException {
         PdfWriter pw;
@@ -445,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        /*
         float[] pointColumnWidths = {39F, 344F,212F};
         float[] pointColumnWidths2 = {106F,106F};
         float[] pointColumnWidths3 = {344F};
@@ -453,12 +472,31 @@ public class MainActivity extends AppCompatActivity {
         float[] pointColumnWidths5 = {172F};
         float[] pointColumnWidths6 = {39F};
         float[] pointColumnWidths7 = {212F};
+        */
+
+        float[] pointColumnWidths = {39F, 300F,200F};
+        float[] pointColumnWidths7 = {212F};
+        float[] pointColumnWidths2 = {100F,100F};
+        float[] pointColumnWidths3 = {300F};
+        float[] pointColumnWidths4 = {150F,150F};
+        float[] pointColumnWidths5 = {150F};
+        float[] pointColumnWidths6 = {39F};
+
+
+
 
         float [] pointColumnWidths8 ={383F,212F};
         float [] pointColumnWidths9 ={39F};
         float [] pointColumnWidths10 ={106F};
 
 
+
+
+
+        float [] pointColumnWidths11 ={500F,95F};
+
+
+        Image image;
         //for the lowermost row
 
         final Context context = this;
@@ -480,6 +518,41 @@ public class MainActivity extends AppCompatActivity {
             Document d = new Document(pd);
 
 
+/*
+           String imageFile = "logonew.jpg";
+            ImageData data = ImageDataFactory.create(imageFile);
+            Image img = new Image(data);
+            d.add(img);
+*/
+
+            image=null;
+            try {
+
+                Drawable dr = getResources().getDrawable(R.drawable.logo);
+                BitmapDrawable bitDw = ((BitmapDrawable) dr);
+                Bitmap bmp = bitDw.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+
+                ImageData imgdata = ImageDataFactory.create(stream.toByteArray());
+
+                 image=new Image(imgdata);
+              //  image.setFixedPosition(400f,750f);
+                //image.setHeight(100f);
+                //image.setWidth(200f);
+
+                //d.add(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+
+
+
 
 
 
@@ -496,10 +569,58 @@ public class MainActivity extends AppCompatActivity {
             table4 =new Table(pointColumnWidths8);
             table4.setVerticalBorderSpacing(5);
 
+            table6 =new Table(pointColumnWidths11);
+            table6.setVerticalBorderSpacing(5);
+
+
+
+            //add address
+            cell2 = new Cell();
+            str="Prakriti Architects and Builders\n6757 C, Shalom, Judgemukku\nBMC PO Thrikkakara \nErnakulam-682021,Kerala\nTel: +91 9947111155\nEmail:mail@prakriti.net.in\n";
+            p= new Paragraph(str);
+            p.setFontSize(9f);
+
+            Text tt= new Text("www.prakriti.net.in").setFontColor(myColor);
+            p.add(tt);
+
+            p.setTextAlignment(TextAlignment.LEFT);
+            cell2.add(p);
+            cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell2.setBorder(Border.NO_BORDER);
+            table6.addCell(cell2);
 
 
 
 
+
+            //add logo
+            cell1=new Cell();
+            cell1.add(image);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            table6.addCell(cell1);
+
+
+
+            //add a blank row
+            cell3 = new Cell();
+            p = new Paragraph(" \n ");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+            table6.addCell(cell3);
+            cell3 = new Cell();
+            p = new Paragraph(" \n ");
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell3.add(p);
+            cell3.setBorder(Border.NO_BORDER);
+            table6.addCell(cell3);
+
+             //add table6
+            d.add(table6);
+
+
+            //add gst
             Text redText = new Text("GSTIN:-32AAUFP9623J1ZO\n").setFontColor(myColorBlack).setBold();
             str="STATE:-Kerala(32)\nSpecification:-SAC - 995411";
             cell2 = new Cell();
@@ -533,7 +654,10 @@ public class MainActivity extends AppCompatActivity {
             //add invoice
 
             Text invNum=new Text(et3.getText().toString()).setFontColor(myColorRed);
-            str="PAB-"+et3.getText().toString()+"/"+valueArrayList.get(0);;
+            str="PAB-";
+            Text str6=new Text(et3.getText().toString()).setFontColor(myColorRed);
+            String str7="/"+valueArrayList.get(0);;
+
             redText = new Text("INVOICE\n").setFontColor(myColor).setBold();
 
 
@@ -544,6 +668,8 @@ public class MainActivity extends AppCompatActivity {
             p= new Paragraph(redText);
             p.add(str3);
             p.add(str);
+            p.add(str6);
+            p.add(str7);
 
             Date c = Calendar.getInstance().getTime();
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -584,12 +710,32 @@ public class MainActivity extends AppCompatActivity {
 
             //client details
              redText = new Text("Client Name & Address\n").setFontColor(myColor).setBold().setUnderline();
-            str2="Client Name & Address\n";
+            p= new Paragraph(redText);
 
             str=et1.getText().toString();
+            String [] address_details=str.split("\n");
+            client_address_lines=address_details.length;
+            if(address_details.length>=6)
+            {
+              for(int i=0;i<6;i++)
+              {
+                  p.add(address_details[i]);
+                  p.add("\n");
+              }
+            }
+            else
+            {
+                for(int i=0;i<address_details.length;i++)
+                {
+                    p.add(address_details[i]);
+                    p.add("\n");
+                }
+
+            }
+
             cell2 = new Cell();
-            p= new Paragraph(redText);
-            p.add(str);
+
+            //p.add(str);
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -605,7 +751,31 @@ public class MainActivity extends AppCompatActivity {
             str=et2.getText().toString();
             cell2 = new Cell();
             p= new Paragraph(redText);
-            p.add(str);
+
+            String [] project_details=str.split("\n");
+            project_details_lines=project_details.length;
+            if(project_details.length>=6)
+            {
+                for(int i=0;i<6;i++)
+                {
+                    p.add(project_details[i]);
+                    p.add("\n");
+                }
+            }
+            else
+            {
+                for(int i=0;i<project_details.length;i++)
+                {
+                    p.add(project_details[i]);
+                    p.add("\n");
+                }
+
+            }
+
+
+
+
+            //p.add(str);
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -741,6 +911,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            UnitValue heightofcell=cell4.getHeight();
+            //Toast.makeText(MainActivity.this, (CharSequence) heightofcell, Toast.LENGTH_LONG).show();
+
             //Now get from 2nd row onwards
             // i must be >=2
             for(int i=2;i<=numLinesInParticulars;i++)
@@ -779,7 +952,6 @@ public class MainActivity extends AppCompatActivity {
                 table2.addCell(cell2);
 
 
-
                 cell3 = new Cell();
                 cell3.setBorder(Border.NO_BORDER);
                 cell3.setBorderBottom(new SolidBorder(0.25f));
@@ -787,7 +959,6 @@ public class MainActivity extends AppCompatActivity {
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell3.add(p);
                 table3.addCell(cell3);
-
 
                 et = findViewById(1111+(i-2));
                 cell4 = new Cell();
@@ -805,7 +976,6 @@ public class MainActivity extends AppCompatActivity {
                 table3.addCell(cell4);
 
 
-
             }//for loop
 
 
@@ -815,34 +985,67 @@ public class MainActivity extends AppCompatActivity {
             //spare cell to set height
 
 
+
+               /*
+               //here set the heights of the tables
+               //max height case
+             if((client_address_lines==5 || project_details_lines==5) && numLinesInParticulars==5)
+             {
+                 initial_table_heights=0;
+             }
+            */
+                     //now min height case
+
+            int max;
+             if(client_address_lines>=project_details_lines)
+             {
+                 max=client_address_lines;
+             }
+             else
+             {
+                 max=project_details_lines;
+             }
+
+             max=max+numLinesInParticulars+numLinesinTax;
+
+             int max1=17-max;
+
+
+
+
+
+
+
+
+
+
+
+
+            for(int i=0;i<max1;i++) {
+
                 cell1 = new Cell();
-                str="\n";
+                str = "\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell1.add(p);
-               cell1.setBorder(Border.NO_BORDER);
-               cell1.setBorderBottom(new SolidBorder(0.25f));
-                cell1.setHeight(initial_table_heights);
-            if(numLinesInParticulars<=2)
-            {
-                cell1.setHeight(max_table_height);
-            }
-
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                cell1.setBorder(Border.NO_BORDER);
+                if(i==max1-1)
+                {
+                    cell1.setBorderBottom(new SolidBorder(0.25f));
+                }
+                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 table1.addCell(cell1);
 
 
                 cell2 = new Cell();
-                str="\n";
+                str = "\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell2.add(p);
-            cell2.setBorder(Border.NO_BORDER);
-            cell2.setBorderBottom(new SolidBorder(0.25f));
-                cell2.setHeight(initial_table_heights);
-                if(numLinesInParticulars<=2)
-                {
-                    cell2.setHeight(max_table_height);
+                cell2.setBorder(Border.NO_BORDER);
+                if(i==max1-1) {
+
+                    cell2.setBorderBottom(new SolidBorder(0.25f));
                 }
 
                 cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -853,33 +1056,27 @@ public class MainActivity extends AppCompatActivity {
                 p = new Paragraph(" \n ");
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell3.add(p);
-            cell3.setBorder(Border.NO_BORDER);
-            cell3.setBorderBottom(new SolidBorder(0.25f));
-                cell3.setHeight(initial_table_heights);
-            if(numLinesInParticulars<=2)
-            {
-                cell3.setHeight(max_table_height);
-            }
+                cell3.setBorder(Border.NO_BORDER);
+                if(i==max1-1) {
 
-            table3.addCell(cell3);
+                    cell3.setBorderBottom(new SolidBorder(0.25f));
+                }
+                table3.addCell(cell3);
 
 
                 cell4 = new Cell();
-                str="\n";
+                str = "\n";
                 p = new Paragraph(str);
                 p.setTextAlignment(TextAlignment.CENTER);
                 cell4.add(p);
-            cell4.setBorder(Border.NO_BORDER);
-            cell4.setBorderBottom(new SolidBorder(0.25f));
+                cell4.setBorder(Border.NO_BORDER);
+                if(i==max1-1) {
 
-                cell4.setHeight(initial_table_heights);
-            if(numLinesInParticulars<=2)
-            {
-                cell4.setHeight(max_table_height);
+                    cell4.setBorderBottom(new SolidBorder(0.25f));
+                }
+                table3.addCell(cell4);
+
             }
-
-
-            table3.addCell(cell4);
 
 
 
@@ -1277,6 +1474,21 @@ public class MainActivity extends AppCompatActivity {
 
             //add table1
             d.add(table);
+
+
+            //add footer
+            Paragraph footer = new Paragraph("ARCHITECTS . DEVELOPERS . PROJECT MANAGERS")
+                    .setFont(PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN))
+                    .setFontSize(15);
+
+
+
+            Rectangle pageSize = pd.getPage(1).getPageSize();
+            float x = pageSize.getWidth() / 2;
+            float y = pageSize.getBottom()+15 ;
+            d.showTextAligned(footer, x, y, 1, TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
+
+
             d.close();
 
 

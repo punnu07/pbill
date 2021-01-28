@@ -14,13 +14,13 @@
         android:layout_marginStart="304dp"
         android:layout_marginLeft="304dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="2dp"
         android:text="Add Row"
         app:backgroundTint="#B8A5A5"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button"
@@ -60,11 +60,12 @@
                 android:layout_column="1"
                 android:gravity="center_horizontal"
                 android:text="Sl no"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_description"
-                android:layout_width="254dp"
+                android:layout_width="244dp"
                 android:layout_height="match_parent"
                 android:layout_column="2"
                 android:gravity="center_horizontal"
@@ -177,7 +178,7 @@
         android:layout_height="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:text="Tax/Other Details"
         android:textColor="#300A72"
         app:layout_constraintStart_toStartOf="parent"
@@ -203,16 +204,17 @@
 
             <TextView
                 android:id="@+id/other_tax"
-                android:layout_width="180dp"
+                android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_column="1"
                 android:gravity="center_horizontal"
                 android:text="Tax Details"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/other_percentage"
-                android:layout_width="64dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_column="2"
                 android:gravity="center_horizontal"
@@ -223,7 +225,7 @@
 
             <TextView
                 android:id="@+id/other_amount"
-                android:layout_width="165dp"
+                android:layout_width="133dp"
                 android:layout_height="match_parent"
                 android:layout_column="3"
                 android:gravity="center_horizontal"
