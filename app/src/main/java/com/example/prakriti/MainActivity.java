@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     float intermediate_table_height=120;
 
-    int max_number_of_particular_rows=4;
+    int max_number_of_particular_rows=3;
     int max_number_of_tax_rows=5;
 
     int client_address_lines=0;
@@ -449,8 +449,11 @@ public class MainActivity extends AppCompatActivity {
         String str, str2,str3,str4;
         Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7;
         Table table1, table2, table3, table4, table5, table6, table12, table13, table14,table15;
+
         Paragraph p;
 
+        UnitValue Inwordscellheight;
+        int total_lines=16;
 
         Color headerBg = new Color();
         com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(0, 55, 130);
@@ -495,8 +498,11 @@ public class MainActivity extends AppCompatActivity {
 
         float [] pointColumnWidths11 ={500F,95F};
 
+        float [] pointColumnWidths18 ={100F, 395F, 100F};
 
-        Image image;
+        float[] pointColumnWidths17 = {212F,0f};
+
+        Image image, image2, image3;
         //for the lowermost row
 
         final Context context = this;
@@ -532,15 +538,15 @@ public class MainActivity extends AppCompatActivity {
                 BitmapDrawable bitDw = ((BitmapDrawable) dr);
                 Bitmap bmp = bitDw.getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
 
                 ImageData imgdata = ImageDataFactory.create(stream.toByteArray());
 
                  image=new Image(imgdata);
               //  image.setFixedPosition(400f,750f);
-                //image.setHeight(100f);
-                //image.setWidth(200f);
+                image.setHeight(100f);
+                image.setWidth(100f);
 
                 //d.add(image);
 
@@ -548,6 +554,56 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
+
+
+
+            image2=null;
+            try {
+
+                Drawable dr = getResources().getDrawable(R.drawable.address);
+                BitmapDrawable bitDw = ((BitmapDrawable) dr);
+                Bitmap bmp = bitDw.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+
+                ImageData imgdata = ImageDataFactory.create(stream.toByteArray());
+
+                image2=new Image(imgdata);
+                //  image.setFixedPosition(400f,750f);
+                image2.setHeight(100f);
+                image2.setWidth(100f);
+
+                //d.add(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            image3=null;
+            try {
+
+                Drawable dr = getResources().getDrawable(R.drawable.bottom);
+                BitmapDrawable bitDw = ((BitmapDrawable) dr);
+                Bitmap bmp = bitDw.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+
+                ImageData imgdata = ImageDataFactory.create(stream.toByteArray());
+
+                image3=new Image(imgdata);
+                //  image.setFixedPosition(400f,750f);
+                image3.setHeight(15f);
+                image3.setWidth(400f);
+
+                //d.add(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
 
@@ -578,7 +634,7 @@ public class MainActivity extends AppCompatActivity {
             cell2 = new Cell();
             str="Prakriti Architects and Builders\n6757 C, Shalom, Judgemukku\nBMC PO Thrikkakara \nErnakulam-682021,Kerala\nTel: +91 9947111155\nEmail:mail@prakriti.net.in\n";
             p= new Paragraph(str);
-            p.setFontSize(9f);
+            p.setFontSize(8f);
 
             Text tt= new Text("www.prakriti.net.in").setFontColor(myColor);
             p.add(tt);
@@ -587,7 +643,14 @@ public class MainActivity extends AppCompatActivity {
             cell2.add(p);
             cell2.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell2.setBorder(Border.NO_BORDER);
-            table6.addCell(cell2);
+            //table6.addCell(cell2);
+
+
+            cell1=new Cell();
+            cell1.add(image2);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            table6.addCell(cell1);
 
 
 
@@ -601,7 +664,7 @@ public class MainActivity extends AppCompatActivity {
             table6.addCell(cell1);
 
 
-
+/*
             //add a blank row
             cell3 = new Cell();
             p = new Paragraph(" \n ");
@@ -616,8 +679,12 @@ public class MainActivity extends AppCompatActivity {
             cell3.setBorder(Border.NO_BORDER);
             table6.addCell(cell3);
 
+*/
+
              //add table6
             d.add(table6);
+
+            d.add( new Paragraph( "\n" ) );
 
 
             //add gst
@@ -689,6 +756,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            /*
             //add a blank row
             cell3 = new Cell();
             p = new Paragraph(" \n ");
@@ -705,7 +773,7 @@ public class MainActivity extends AppCompatActivity {
             cell3.setBorder(Border.NO_BORDER);
 
             table4.addCell(cell3);
-
+     */
 
 
             //client details
@@ -1008,7 +1076,7 @@ public class MainActivity extends AppCompatActivity {
 
              max=max+numLinesInParticulars+numLinesinTax;
 
-             int max1=17-max;
+             int max1=total_lines-max;
 
 
 
@@ -1214,8 +1282,8 @@ public class MainActivity extends AppCompatActivity {
 
             //add one more row for offseting the full amount in words
             cell1 = new Cell();
-            str="\n";
-            //str="In Words";
+            //str="\n";
+            str="In words";
             p = new Paragraph(str);
             p.setTextAlignment(TextAlignment.CENTER);
 
@@ -1279,6 +1347,7 @@ public class MainActivity extends AppCompatActivity {
 //for right side
 
 
+            /*
 
 
                 //create a table to add 2 rows of percentage and amount
@@ -1384,6 +1453,8 @@ public class MainActivity extends AppCompatActivity {
             //String digit_in_words=convertNumber(final_amount);
 
 
+
+
             //add one more row
             cell1 = new Cell();
             str="\n";
@@ -1394,8 +1465,6 @@ public class MainActivity extends AppCompatActivity {
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
             table4.addCell(cell1);
-
-
 
             cell1 = new Cell();
             str="\n";
@@ -1408,6 +1477,358 @@ public class MainActivity extends AppCompatActivity {
             table5.addCell(cell1);
 
 
+
+            //convert table to a cell
+            cell5=new Cell();
+            cell5.add(table4);
+            cell5.setPadding(0);
+            cell5.setBorder(Border.NO_BORDER);
+
+            cell6=new Cell();
+            cell6.add(table5);
+            cell6.setPadding(0);
+            cell6.setBorder(Border.NO_BORDER);
+
+
+
+
+
+            //add left and right of table3
+            table3.addCell(cell5);
+            table3.addCell(cell6);
+
+
+
+
+
+
+
+            //convert table3 to a cell and aadd as the first row of table2
+            cell5=new Cell();
+            cell5.add(table3);
+            cell5.setBorder(Border.NO_BORDER);
+            cell5.setPadding(-2);
+            table2.addCell(cell5);
+
+
+
+
+            cell1 = new Cell();
+            str="hhhhh\n";
+            p = new Paragraph(str);
+            //p=new Paragraph(digit_in_words);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.add(p);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            //cell1.setWidth(250);
+
+            cell1.setPaddingBottom(4);
+            table2.addCell(cell1);
+
+
+            //second row of table2
+
+            //this is for sign
+            cell3 = new Cell();
+            p = new Paragraph("\n\n\n\n Authorized Signatory");
+            p.setTextAlignment(TextAlignment.CENTER);
+
+            //cell3.setPadding(-2);
+            cell3.add(p);
+            cell3.setHeight(cell_height);
+            cell3.setBorder(Border.NO_BORDER);
+            //cell3.setBorderTop(new SolidBorder(0.25f));
+            //cell3.setPaddingTop(-15);
+             table2.addCell(cell3);
+
+
+//this works
+             */
+
+
+
+
+            //new right side
+
+            //comment point
+
+            table2=new Table(pointColumnWidths7);
+            table3=new Table(pointColumnWidths2);
+            table4=new Table(pointColumnWidths10);
+            table5=new Table(pointColumnWidths10);
+            table6=new Table(pointColumnWidths17);
+
+
+
+            table2.setBorder(Border.NO_BORDER);
+            table4.setBorder(Border.NO_BORDER);
+            table5.setBorder(Border.NO_BORDER);
+            table3.setBorder(Border.NO_BORDER);
+            table6.setBorder(Border.NO_BORDER);
+
+
+
+            table3.setBorderBottom(new SolidBorder(0.25f));
+
+
+            //start of content
+
+            et = findViewById(R.id.percentage);
+            cell1 = new Cell();
+            str = et.getText().toString();
+            if(str.isEmpty())
+            {
+                str="\n";
+            }
+            p = new Paragraph(str);
+            cell1.add(p);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            cell1.setBorderRight(new SolidBorder(0.25f));
+
+            table4.addCell(cell1);
+
+
+            et = findViewById(R.id.tax_amount);
+            cell1 = new Cell();
+            str = et.getText().toString();
+            if(str.isEmpty())
+            {
+                str="\n";
+            }
+            p = new Paragraph(str);
+            cell1.add(p);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            //cell1.setHeight(findViewById(R.id.tax).getHeight());
+
+            table5.addCell(cell1);
+
+            Inwordscellheight=cell1.getHeight();
+
+            for(int i=2;i<=numLinesinTax;i++) {
+
+                et = findViewById(555+(i-2));
+                cell1 = new Cell();
+                str = et.getText().toString();
+                if(str.isEmpty())
+                {
+                    str="\n";
+                }
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+
+                cell1.add(p);
+                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                cell1.setBorder(Border.NO_BORDER);
+                if(i<numLinesinTax)
+                cell1.setBorderBottom(new SolidBorder(0.25f));
+                //cell1.setBorderTop(new SolidBorder(0.25f));
+                cell1.setBorderRight(new SolidBorder(0.25f));
+
+
+                table4.addCell(cell1);
+
+
+                et = findViewById(5555+(i-2));
+                cell1 = new Cell();
+                str = et.getText().toString();
+                if(str.isEmpty())
+                {
+                    str="\n";
+                }
+                p = new Paragraph(str);
+                p.setTextAlignment(TextAlignment.CENTER);
+
+                cell1.add(p);
+                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                cell1.setBorder(Border.NO_BORDER);
+                if(i<numLinesinTax)
+                cell1.setBorderBottom(new SolidBorder(0.25f));
+
+                table5.addCell(cell1);
+
+            }
+
+            //end of the content
+
+
+
+
+
+
+
+            cell5=new Cell();
+            cell5.add(table4);
+            cell5.setBorder(Border.NO_BORDER);
+            cell5.setPadding(0);
+            table3.addCell(cell5);
+
+            cell5=new Cell();
+            cell5.add(table5);
+            cell5.setBorder(Border.NO_BORDER);
+            cell5.setPadding(0);
+            table3.addCell(cell5);
+
+
+
+
+
+
+
+
+            //table3
+            cell5=new Cell();
+            cell5.add(table3);
+            cell5.setBorder(Border.NO_BORDER);
+            cell5.setPadding(-1);
+            table6.addCell(cell5);
+
+
+            //right of table3
+            cell3 = new Cell();
+            str="";
+            p = new Paragraph(str);
+            cell3.add(p);
+            //p.setTextAlignment(TextAlignment.CENTER);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setPadding(-2);
+            //cell3.setBorderBottom(new SolidBorder(0.25f));
+            //cell3.setBorderRight(new SolidBorder(0.25f));
+            table6.addCell(cell3);
+
+
+            //in words
+            cell3 = new Cell();
+            et=findViewById(R.id.Inwords);
+            str = et.getText().toString();
+            if(str.isEmpty())
+            {
+                str="\n";
+            }
+            p = new Paragraph(str);
+            p.setFontSize(8);
+            cell3.add(p);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setHeight(19);
+
+            //cell3.setBorderBottom(new SolidBorder(0.25f));
+            //cell3.setBorderRight(new SolidBorder(0.25f));
+            table6.addCell(cell3);
+
+
+            //right of words
+            cell3 = new Cell();
+            str="";
+            p = new Paragraph(str);
+            cell3.add(p);
+            //p.setTextAlignment(TextAlignment.CENTER);
+            cell3.setBorder(Border.NO_BORDER);
+            cell3.setPadding(-1);
+            //cell3.setBorderBottom(new SolidBorder(0.25f));
+            //cell3.setBorderRight(new SolidBorder(0.25f));
+            table6.addCell(cell3);
+
+
+
+
+
+
+            table6.setBorderBottom(new SolidBorder(0.25f));
+
+
+            cell5=new Cell();
+            cell5.add(table6);
+            cell5.setBorder(Border.NO_BORDER);
+            cell5.setPadding(-1);
+            table2.addCell(cell5);
+
+
+
+            cell3 = new Cell();
+            p = new Paragraph("\n\n\n\n Authorized Signatory");
+            p.setTextAlignment(TextAlignment.CENTER);
+            //cell3.setPadding(-2);
+            cell3.add(p);
+            cell3.setHeight(cell_height);
+            cell3.setBorder(Border.NO_BORDER);
+            //cell3.setBorderTop(new SolidBorder(0.25f));
+            //cell3.setPadding(-2);
+            table2.addCell(cell3);
+
+
+
+
+
+//comment point
+
+
+
+
+            //end of new right side
+           //checking out again
+//comment point
+
+            /*
+            //create a table to add 2 rows of percentage and amount
+            table2=new Table(pointColumnWidths7);
+            //add tax percentage and amount to a table
+            table3=new Table(pointColumnWidths2);
+            table4=new Table(pointColumnWidths10);
+            //add tax percentage and amount to a table
+            table5=new Table(pointColumnWidths10);
+
+
+
+            table3.setBorder(Border.NO_BORDER);
+            table2.setBorder(Border.NO_BORDER);
+            table4.setBorder(Border.NO_BORDER);
+            table5.setBorder(Border.NO_BORDER);
+
+
+            table3.setBorderBottom(new SolidBorder(0.25f));
+
+            et = findViewById(R.id.percentage);
+            cell1 = new Cell();
+            str = et.getText().toString();
+            if(str.isEmpty())
+            {
+                str="\n";
+            }
+            p = new Paragraph(str);
+            cell1.add(p);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            cell1.setBorderRight(new SolidBorder(0.25f));
+
+            table4.addCell(cell1);
+
+
+            et = findViewById(R.id.tax_amount);
+            cell1 = new Cell();
+            str = et.getText().toString();
+            if(str.isEmpty())
+            {
+                str="\n";
+            }
+            p = new Paragraph(str);
+            cell1.add(p);
+            p.setTextAlignment(TextAlignment.CENTER);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+            cell1.setBorderBottom(new SolidBorder(0.25f));
+            //cell1.setHeight(findViewById(R.id.tax).getHeight());
+
+            table5.addCell(cell1);
 
 
             //convert table to a cell
@@ -1429,32 +1850,20 @@ public class MainActivity extends AppCompatActivity {
 
 
             //convert table3 to a cell and aadd as the first row of table2
-
             cell5=new Cell();
             cell5.add(table3);
             cell5.setBorder(Border.NO_BORDER);
             cell5.setPadding(-2);
             table2.addCell(cell5);
 
+*/
 
-            //second row of table2
-
-            //this is for sign
-            cell3 = new Cell();
-            p = new Paragraph("\n\n\n\n Authorized Signatory");
-            p.setTextAlignment(TextAlignment.CENTER);
-
-            //cell3.setPadding(-2);
-            cell3.add(p);
-            cell3.setHeight(cell_height);
-            cell3.setBorder(Border.NO_BORDER);
-            //cell3.setBorderTop(new SolidBorder(0.25f));
-             table2.addCell(cell3);
+//comment point
 
 
 
 
-
+///////////////////////////////
             //now create a new cell to add table2
             cell5=new Cell();
             cell5.add(table2);
@@ -1468,7 +1877,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-         //final adding of the table
+
+
+
+            //final adding of the table
 
 
 
@@ -1476,6 +1888,53 @@ public class MainActivity extends AppCompatActivity {
             d.add(table);
 
 
+
+
+
+         //d.add(new Paragraph("\n"));
+
+            //NEW table for footer
+
+            table4 =new Table(pointColumnWidths18);
+
+            cell1=new Cell();
+            str=" \n ";
+             p = new Paragraph(str);
+           cell1.add(p);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell1);
+
+
+
+
+
+            cell1=new Cell();
+            cell1.add(image3);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            cell1.setBorder(Border.NO_BORDER);
+
+            cell4.setPadding(3);
+            table4.addCell(cell1);
+
+
+
+
+            cell1=new Cell();
+            str=" \n";
+            p = new Paragraph(str);
+            cell1.add(p);
+            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+           cell1.setBorder(Border.NO_BORDER);
+
+            table4.addCell(cell1);
+
+            d.add(table4);
+
+
+
+            /*
             //add footer
             Paragraph footer = new Paragraph("ARCHITECTS . DEVELOPERS . PROJECT MANAGERS")
                     .setFont(PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN))
@@ -1487,6 +1946,8 @@ public class MainActivity extends AppCompatActivity {
             float x = pageSize.getWidth() / 2;
             float y = pageSize.getBottom()+15 ;
             d.showTextAligned(footer, x, y, 1, TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
+            */
+
 
 
             d.close();
