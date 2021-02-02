@@ -453,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
         Paragraph p;
 
         UnitValue Inwordscellheight;
-        int total_lines=16;
+        int total_lines=18;
 
         Color headerBg = new Color();
         com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(0, 55, 130);
@@ -477,13 +477,31 @@ public class MainActivity extends AppCompatActivity {
         float[] pointColumnWidths7 = {212F};
         */
 
+
+
+
+
+/*
         float[] pointColumnWidths = {39F, 300F,200F};
-        float[] pointColumnWidths7 = {212F};
+        float[] pointColumnWidths7 = {200F};
         float[] pointColumnWidths2 = {100F,100F};
         float[] pointColumnWidths3 = {300F};
         float[] pointColumnWidths4 = {150F,150F};
         float[] pointColumnWidths5 = {150F};
         float[] pointColumnWidths6 = {39F};
+*/
+
+
+        float[] pointColumnWidths = {39F, 280F,190F};
+        float[] pointColumnWidths7 = {200F};
+        float[] pointColumnWidths2 = {95F,95F};
+        float[] pointColumnWidths3 = {280F};
+        float[] pointColumnWidths4 = {140F,140F};
+        float[] pointColumnWidths5 = {140F};
+        float[] pointColumnWidths6 = {39F};
+
+
+
 
 
 
@@ -496,11 +514,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //used for first level of logo
         float [] pointColumnWidths11 ={500F,95F};
 
+        //used for footer
         float [] pointColumnWidths18 ={100F, 395F, 100F};
 
-        float[] pointColumnWidths17 = {212F,0f};
+        //used for amount in words
+        float[] pointColumnWidths17 = {200F,0f};
 
         Image image, image2, image3;
         //for the lowermost row
@@ -522,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
             pw = new PdfWriter(filename);
             PdfDocument pd = new PdfDocument(pw);
             Document d = new Document(pd);
-
+            d.setMargins(10,10,10,10);
 
 /*
            String imageFile = "logonew.jpg";
@@ -596,8 +617,8 @@ public class MainActivity extends AppCompatActivity {
 
                 image3=new Image(imgdata);
                 //  image.setFixedPosition(400f,750f);
-                image3.setHeight(15f);
-                image3.setWidth(400f);
+                image3.setHeight(13f);
+                image3.setWidth(350f);
 
                 //d.add(image);
 
@@ -611,19 +632,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
             Paragraph pr1=new Paragraph(et1.getText().toString());
             //Toast.makeText(MainActivity.this,et1.getText().toString(), Toast.LENGTH_LONG).show();
 
 
-            table4 =new Table(pointColumnWidths8);
-            table4.setVerticalBorderSpacing(5);
 
             table6 =new Table(pointColumnWidths11);
             table6.setVerticalBorderSpacing(5);
@@ -686,6 +698,11 @@ public class MainActivity extends AppCompatActivity {
 
             d.add( new Paragraph( "\n" ) );
 
+
+            table4 =new Table(pointColumnWidths8);
+            table4.setVerticalBorderSpacing(5);
+
+            table4.setMarginLeft(18);
 
             //add gst
             Text redText = new Text("GSTIN:-32AAUFP9623J1ZO\n").setFontColor(myColorBlack).setBold();
@@ -842,7 +859,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
             //p.add(str);
             p.setTextAlignment(TextAlignment.LEFT);
             cell2.add(p);
@@ -861,6 +877,8 @@ public class MainActivity extends AppCompatActivity {
             Table table = new Table(pointColumnWidths);
 
             table.setBorder(new SolidBorder(0.25f));
+
+            table.setMarginLeft(18);
 
 
             table1 =new Table(pointColumnWidths6);
@@ -1815,7 +1833,7 @@ public class MainActivity extends AppCompatActivity {
 
             et = findViewById(R.id.tax_amount);
             cell1 = new Cell();
-            str = et.getText().toString();
+            str = et.getText().toS44tring();
             if(str.isEmpty())
             {
                 str="\n";
@@ -1911,6 +1929,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             cell1=new Cell();
+            str=" \n";
+            p = new Paragraph(str);
+            cell1.add(p);
             cell1.add(image3);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
