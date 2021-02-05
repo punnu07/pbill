@@ -301,7 +301,7 @@
         android:gravity="start|top"
         android:hint="Project Details"
         android:inputType="textMultiLine"
-        android:maxLines="6"
+        android:maxLines="4"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/client_address"
         app:layout_constraintTop_toTopOf="parent" />
@@ -317,6 +317,7 @@
         android:gravity="start|top"
         android:hint="Client Address"
         android:inputType="textMultiLine"
+        android:maxLength="560"
         android:lines="6"
         android:maxLines="6"
         android:textSize="12sp"

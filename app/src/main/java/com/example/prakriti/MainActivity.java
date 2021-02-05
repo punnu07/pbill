@@ -4,14 +4,21 @@ package com.example.prakriti;
 //import com.itextpdf.kernel.colors.Color;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.fonts.Font;
+import android.icu.text.DecimalFormat;
+import android.icu.text.DecimalFormatSymbols;
 import android.icu.text.SimpleDateFormat;
+import android.icu.util.Currency;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Bundle;
@@ -29,6 +36,9 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.FontProgram;
+import com.itextpdf.io.font.FontProgramFactory;
+import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -57,6 +67,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,6 +84,8 @@ import com.itextpdf.layout.property.UnitValue;
 import com.itextpdf.layout.property.VerticalAlignment;
 
 import org.w3c.dom.Element;
+
+import static com.itextpdf.styledxmlparser.css.CommonCssConstants.FONT;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -114,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
     int project_details_lines=0;
 
 
+    int max_client_address_lines=5;
+    int max_project_details_lines=5;
 //number conversion logic
 
     private static final String[] units = {
@@ -234,14 +250,14 @@ public class MainActivity extends AppCompatActivity {
    int a;
         myButton.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View arg0)
             {
 
                 try {
-
-                   createPdf3();
-                } catch (FileNotFoundException e) {
+                    createPdf3();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(context, MainActivity2.class);
@@ -443,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
 
 //create the pdf
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private  void createPdf3() throws FileNotFoundException {
+    private  void createPdf3() throws IOException {
         PdfWriter pw;
         EditText et1,et2,et3,et4;
         String str, str2,str3,str4;
@@ -453,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
         Paragraph p;
 
         UnitValue Inwordscellheight;
-        int total_lines=18;
+        int total_lines=20;
 
         Color headerBg = new Color();
         com.itextpdf.kernel.colors.Color myColor = new DeviceRgb(0, 55, 130);
@@ -464,6 +480,11 @@ public class MainActivity extends AppCompatActivity {
         et2=findViewById(R.id.project_details);
         et3=findViewById(R.id.invoice_no);
         et4=findViewById(R.id.date);
+
+
+        final String REGULAR = "res/font/rupee.ttf";
+        FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
+        PdfFont font = PdfFontFactory.createFont(fontProgram,PdfEncodings.IDENTITY_H,true);
 
 
 
@@ -523,6 +544,7 @@ public class MainActivity extends AppCompatActivity {
         //used for amount in words
         float[] pointColumnWidths17 = {200F,0f};
 
+
         Image image, image2, image3;
         //for the lowermost row
 
@@ -543,7 +565,7 @@ public class MainActivity extends AppCompatActivity {
             pw = new PdfWriter(filename);
             PdfDocument pd = new PdfDocument(pw);
             Document d = new Document(pd);
-            d.setMargins(10,10,10,10);
+            d.setMargins(10,20,10,15);
 
 /*
            String imageFile = "logonew.jpg";
@@ -696,7 +718,7 @@ public class MainActivity extends AppCompatActivity {
              //add table6
             d.add(table6);
 
-            d.add( new Paragraph( "\n" ) );
+            //d.add( new Paragraph( "\n" ) );
 
 
             table4 =new Table(pointColumnWidths8);
@@ -800,9 +822,9 @@ public class MainActivity extends AppCompatActivity {
             str=et1.getText().toString();
             String [] address_details=str.split("\n");
             client_address_lines=address_details.length;
-            if(address_details.length>=6)
+            if(address_details.length>=max_client_address_lines)
             {
-              for(int i=0;i<6;i++)
+              for(int i=0;i<max_client_address_lines;i++)
               {
                   p.add(address_details[i]);
                   p.add("\n");
@@ -839,9 +861,9 @@ public class MainActivity extends AppCompatActivity {
 
             String [] project_details=str.split("\n");
             project_details_lines=project_details.length;
-            if(project_details.length>=6)
+            if(project_details.length>=max_project_details_lines)
             {
-                for(int i=0;i<6;i++)
+                for(int i=0;i<max_project_details_lines;i++)
                 {
                     p.add(project_details[i]);
                     p.add("\n");
@@ -869,7 +891,7 @@ public class MainActivity extends AppCompatActivity {
 
             d.add(table4);
 
-            d.add( new Paragraph( "\n" ) );
+          //  d.add( new Paragraph( "\n" ) );
 
 
             //PdfPage pdfPage = pd.addNewPage();
@@ -1271,8 +1293,8 @@ public class MainActivity extends AppCompatActivity {
             }
             p = new Paragraph(str);
             cell1.add(p);
-            p.setTextAlignment(TextAlignment.CENTER);
-            cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            p.setTextAlignment(TextAlignment.RIGHT);
+            cell1.setHorizontalAlignment(HorizontalAlignment.RIGHT);
             cell1.setBorder(Border.NO_BORDER);
             cell1.setBorderBottom(new SolidBorder(0.25f));
             table15.addCell(cell1);
@@ -1289,10 +1311,10 @@ public class MainActivity extends AppCompatActivity {
                     str="\n";
                 }
                 p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
+                p.setTextAlignment(TextAlignment.RIGHT);
 
                 cell1.add(p);
-                cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+                cell1.setHorizontalAlignment(HorizontalAlignment.RIGHT);
                 cell1.setBorder(Border.NO_BORDER);
                 cell1.setBorderBottom(new SolidBorder(0.25f));
                 table15.addCell(cell1);
@@ -1303,10 +1325,10 @@ public class MainActivity extends AppCompatActivity {
             //str="\n";
             str="In words";
             p = new Paragraph(str);
-            p.setTextAlignment(TextAlignment.CENTER);
+            p.setTextAlignment(TextAlignment.RIGHT);
 
             cell1.add(p);
-              cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
+              cell1.setHorizontalAlignment(HorizontalAlignment.RIGHT);
               cell1.setBorder(Border.NO_BORDER);
             cell1.setBorderBottom(new SolidBorder(0.25f));
                 table15.addCell(cell1);
@@ -1339,9 +1361,28 @@ public class MainActivity extends AppCompatActivity {
 
             //second row of table12
             //this is for full address
+
+            Text black = new Text("GSTIN:-32AAUFP9623J1ZO\n").setFontColor(myColorBlack).setBold();
+            str="STATE:-Kerala(32)\nSpecification:-SAC - 995411";
+
+            p= new Paragraph(redText);
+            p.add(str);
+            p.setTextAlignment(TextAlignment.LEFT);
+
+
+
             cell3 = new Cell();
-            p = new Paragraph("\n");
-            p.setTextAlignment(TextAlignment.CENTER);
+            p = new Paragraph("Prakriti Architects & Builders\n Current A/c:-");
+
+            Text bl1=new Text("215402100023150\n").setFontColor(myColorBlack).setBold();
+            str2="UCO Bank, Thrikkakara Branch\n Ernakulam\n IFSC:-";
+            Text bl2=new Text("UCBA0002154").setFontColor(myColorBlack).setBold();
+
+            p.add(bl1);
+            p.add(str2);
+            p.add(bl2);
+
+            p.setTextAlignment(TextAlignment.LEFT);
             cell3.add(p);
             cell3.setBorder(Border.NO_BORDER);
             //cell3.setBorderTop(new SolidBorder(0.25f));
@@ -1596,6 +1637,7 @@ public class MainActivity extends AppCompatActivity {
             et = findViewById(R.id.percentage);
             cell1 = new Cell();
             str = et.getText().toString();
+
             if(str.isEmpty())
             {
                 str="\n";
@@ -1613,14 +1655,28 @@ public class MainActivity extends AppCompatActivity {
 
             et = findViewById(R.id.tax_amount);
             cell1 = new Cell();
-            str = et.getText().toString();
+            str2 = et.getText().toString();
+
+            str=CurrencyConvert(str2);
             if(str.isEmpty())
             {
                 str="\n";
             }
-            p = new Paragraph(str);
-            cell1.add(p);
+
+            str2="\u20B9";
+            Text te=new Text(str2).setFont(font);
+            te.setFontSize(9.5f);
+
+            if(!str.isEmpty())
+            {
+                p = new Paragraph(te);
+            }
+
+            p.add(str);
+
+
             p.setTextAlignment(TextAlignment.CENTER);
+            cell1.add(p);
             cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
             cell1.setBorder(Border.NO_BORDER);
             cell1.setBorderBottom(new SolidBorder(0.25f));
@@ -1656,15 +1712,22 @@ public class MainActivity extends AppCompatActivity {
 
                 et = findViewById(5555+(i-2));
                 cell1 = new Cell();
-                str = et.getText().toString();
+                str2 = et.getText().toString();
+                str=CurrencyConvert(str2);
+
                 if(str.isEmpty())
                 {
                     str="\n";
                 }
-                p = new Paragraph(str);
-                p.setTextAlignment(TextAlignment.CENTER);
 
+                if(!str.isEmpty()) {
+                    p = new Paragraph(te);
+                }
+                p.add(str);
+                p.setTextAlignment(TextAlignment.CENTER);
                 cell1.add(p);
+
+
                 cell1.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 cell1.setBorder(Border.NO_BORDER);
                 if(i<numLinesinTax)
@@ -1986,7 +2049,165 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    //code to convert to currency string
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String CurrencyConvert(String SourceString) throws IOException {
+        int i, j;
+        int k=0;
 
+        String str2;
+
+        /*
+        final String REGULAR = "res/font/rupee.ttf";
+        FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
+        PdfFont font = PdfFontFactory.createFont(fontProgram,PdfEncodings.IDENTITY_H,true);
+           */
+
+
+
+
+        int DecimalIndex = 0;
+        char[] DestString = new char[100];
+        char[] DestString2 = new char[100];
+
+
+        //first check whether the source string has commas
+        //if so return it back the same way
+        if(SourceString.isEmpty())
+            return SourceString;
+
+        if (SourceString.contains(","))
+            return  SourceString;
+        if (!SourceString.contains(".")) {
+            //check for length
+            if (SourceString.length() <= 3)
+                return SourceString;
+            else {
+
+
+                //get the last three chars
+               k=0;
+               i=SourceString.length()-1;
+               for(j=0;j<3;j++) {
+                   DestString[k++] = SourceString.charAt(i);
+                   i--;
+               }
+                DestString[k++] = ',';
+                j = 0;
+
+                while (i >= 0) {
+                    DestString[k++] = SourceString.charAt(i);
+                    i--;
+                    j++;
+                    if (j == 2) {
+                        DestString[k++] = ',';
+                        j=0;
+                    }
+
+                } //end of while
+
+
+                //reverse the string
+                if(DestString[k-1]==',')
+                {
+                    k=k-1;
+                }
+                for(i=0;i<k;i++)
+                {
+                    DestString2[i]=DestString[(k-1)-i];
+                }
+
+
+
+            }//end of if
+        }//end of decimal index 0
+        else{
+
+
+
+            if (SourceString.length() <= 5)
+                return SourceString;
+
+
+            k=0;
+            i=SourceString.length()-1;
+            while(SourceString.charAt(i)!='.')
+            {
+                DestString[k++] = SourceString.charAt(i);
+                i--;
+            }
+            DestString[k++] ='.';
+                    i--;
+
+            for(j=0;j<3;j++) {
+                DestString[k++] = SourceString.charAt(i);
+                i--;
+            }
+            DestString[k++] = ',';
+            j = 0;
+
+            while (i >= 0) {
+                DestString[k++] = SourceString.charAt(i);
+                i--;
+                j++;
+                if (j == 2) {
+                    DestString[k++] = ',';
+                    j = 0;
+                }
+
+            }        //end of while
+
+
+
+            if(DestString[k-1]==',')
+            {
+                k=k-1;
+            }
+
+
+            for (i = 0; i < k; i++) {
+               DestString2[i] = DestString[(k - 1) - i];
+              }
+
+
+            //DestString[0]='0';
+        }//end of else{}
+
+
+
+        //str[0]='0';
+        str2=String.valueOf(DestString2);
+
+
+        return str2;
+    } //END OF FUNCION
+
+
+
+
+
+
+
+
+
+    private static String rupeeFormat(String value){
+        value=value.replace(",","");
+        char lastDigit=value.charAt(value.length()-1);
+        String result = "";
+        int len = value.length()-1;
+        int nDigits = 0;
+
+        for (int i = len - 1; i >= 0; i--)
+        {
+            result = value.charAt(i) + result;
+            nDigits++;
+            if (((nDigits % 2) == 0) && (i > 0))
+            {
+                result = "," + result;
+            }
+        }
+        return (result+lastDigit);
+    }
 
 
 
