@@ -545,7 +545,7 @@ public class MainActivity extends AppCompatActivity {
         float[] pointColumnWidths17 = {200F,0f};
 
 
-        Image image, image2, image3;
+        Image image, image2, image3,image4,image5;
         //for the lowermost row
 
         final Context context = this;
@@ -650,6 +650,59 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+            image4=null;
+            try {
+
+                Drawable dr = getResources().getDrawable(R.drawable.seal2);
+                BitmapDrawable bitDw = ((BitmapDrawable) dr);
+                Bitmap bmp = bitDw.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+
+                ImageData imgdata = ImageDataFactory.create(stream.toByteArray());
+
+                image4=new Image(imgdata);
+                //  image.setFixedPosition(400f,750f);
+                image4.setHeight(90f);
+                image4.setWidth(90f);
+
+                //d.add(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+
+            image5=null;
+            try {
+
+                Drawable dr = getResources().getDrawable(R.drawable.sign2);
+                BitmapDrawable bitDw = ((BitmapDrawable) dr);
+                Bitmap bmp = bitDw.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+
+                ImageData imgdata = ImageDataFactory.create(stream.toByteArray());
+
+                image5=new Image(imgdata);
+                //  image.setFixedPosition(400f,750f);
+                image5.setHeight(70f);
+                image5.setWidth(70f);
+
+                //d.add(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
 
@@ -1271,7 +1324,14 @@ public class MainActivity extends AppCompatActivity {
             //add to left of table3
             //this is for seal
             cell3 = new Cell();
-            p = new Paragraph("\n");
+
+            p = new Paragraph(" ");
+            if(numLinesinTax>=3)
+            {
+              p.add("\n");
+                p.add(image4);
+            }
+
             p.setTextAlignment(TextAlignment.CENTER);
             cell3.add(p);
             cell3.setBorder(Border.NO_BORDER);
@@ -1665,7 +1725,7 @@ public class MainActivity extends AppCompatActivity {
 
             str2="\u20B9";
             Text te=new Text(str2).setFont(font);
-            te.setFontSize(9.5f);
+            te.setFontSize(10.5f);
 
             if(!str.isEmpty())
             {
@@ -1834,7 +1894,11 @@ public class MainActivity extends AppCompatActivity {
 
 
             cell3 = new Cell();
-            p = new Paragraph("\n\n\n\n Authorized Signatory");
+            //cell3.add(image5);
+            p = new Paragraph("");
+            p.add(image5);
+            p.add("\n");
+            p.add("[Authorized Signatory]");
             p.setTextAlignment(TextAlignment.CENTER);
             //cell3.setPadding(-2);
             cell3.add(p);
