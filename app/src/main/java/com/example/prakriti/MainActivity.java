@@ -1060,15 +1060,45 @@ public class MainActivity extends AppCompatActivity {
             cell4.setBorder(Border.NO_BORDER);
             cell4.setBorderBottom(new SolidBorder(0.25f));
             cell4.setBorderLeft(new SolidBorder(0.25f));
+
+            /*
             str = et.getText().toString();
             p = new Paragraph(str);
             if(str.isEmpty())
             {
                 str="\n";
             }
+
+            */
+
+
+            ///rupee
+
+            str2 = et.getText().toString();
+
+            str=CurrencyConvert(str2);
+            if(str.isEmpty())
+            {
+                str="\n";
+            }
+            str2="\u20B9";
+            Text te=new Text(str2).setFont(font);
+            te.setFontSize(10.5f);
+            if(!str.isEmpty())
+            {
+                p = new Paragraph(te);
+            }
+            p.add(str);
             p.setTextAlignment(TextAlignment.CENTER);
+
+
+            //end
+
             cell4.add(p);
             table3.addCell(cell4);
+
+
+
 
 
 
@@ -1123,13 +1153,38 @@ public class MainActivity extends AppCompatActivity {
 
                 et = findViewById(1111+(i-2));
                 cell4 = new Cell();
+
+/*
                 str = et.getText().toString();
+
                 if(str.isEmpty())
                 {
                     str="\n";
                 }
                 p = new Paragraph(str);
+
+
+ */
+
+                //add rupee
+                str2 = et.getText().toString();
+                str=CurrencyConvert(str2);
+                if(str.isEmpty())
+                {
+                    str="\n";
+                }
+                str2="\u20B9";
+                te=new Text(str2).setFont(font);
+                te.setFontSize(10.5f);
+                if(!str.isEmpty())
+                {
+                    p = new Paragraph(te);
+                }
+                p.add(str);
                 p.setTextAlignment(TextAlignment.CENTER);
+                //end
+
+
                 cell4.setBorder(Border.NO_BORDER);
                 cell4.setBorderBottom(new SolidBorder(0.25f));
                 cell4.setBorderLeft(new SolidBorder(0.25f));
@@ -1724,7 +1779,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             str2="\u20B9";
-            Text te=new Text(str2).setFont(font);
+            te=new Text(str2).setFont(font);
             te.setFontSize(10.5f);
 
             if(!str.isEmpty())
@@ -1774,6 +1829,11 @@ public class MainActivity extends AppCompatActivity {
                 cell1 = new Cell();
                 str2 = et.getText().toString();
                 str=CurrencyConvert(str2);
+
+                str2="\u20B9";
+                te=new Text(str2).setFont(font);
+                te.setFontSize(10.5f);
+
 
                 if(str.isEmpty())
                 {
